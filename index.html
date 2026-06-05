@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Granja Development – Your Life In The Heart Of Nature</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1e2a4a;
+    --navy-deep: #141c35;
+    --green: #4a7c3f;
+    --green-light: #6aaa5b;
+    --green-accent: #7cbf6e;
+    --terracotta: #c8593a;
+    --cream: #f8f5f0;
+    --warm-white: #fdfcfa;
+    --sand: #e8e0d0;
+    --text-dark: #1a1a2e;
+    --text-mid: #3d4460;
+    --text-light: #6b7280;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 18px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(30,42,74,0.97);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 60px;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 12px;
+    text-decoration: none;
+  }
+  .nav-logo-mark {
+    width: 42px; height: 42px;
+    background: linear-gradient(135deg, var(--green), var(--green-accent));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 600; color: white;
+    box-shadow: 0 4px 20px rgba(74,124,63,0.4);
+  }
+  .nav-logo-text {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600; font-size: 18px;
+    color: white; letter-spacing: 0.5px;
+  }
+  .nav-logo-text span { color: var(--green-accent); }
+  .nav-links { display: flex; gap: 36px; align-items: center; }
+  .nav-links a {
+    color: rgba(255,255,255,0.85);
+    text-decoration: none; font-size: 13px;
+    font-weight: 500; letter-spacing: 0.8px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+    height: 1px; background: var(--green-accent);
+    transform: scaleX(0); transition: transform 0.3s;
+  }
+  .nav-links a:hover { color: white; }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta {
+    background: var(--green);
+    color: white !important;
+    padding: 9px 22px !important;
+    border-radius: 4px;
+    transition: background 0.3s, transform 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--green-light) !important; transform: translateY(-1px); }
+  .nav-cta::after { display: none !important; }
+
+  /* ─── HERO ─── */
+  #hero {
+    height: 100vh; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background: 
+      linear-gradient(160deg, rgba(20,28,53,0.85) 0%, rgba(30,42,74,0.6) 40%, rgba(74,124,63,0.3) 100%),
+      url('https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1920&q=80') center/cover no-repeat;
+    transform: scale(1.05);
+    animation: heroZoom 20s ease-in-out infinite alternate;
+  }
+  @keyframes heroZoom {
+    from { transform: scale(1.05); }
+    to { transform: scale(1.12); }
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    text-align: center; padding: 0 24px;
+    animation: heroFadeUp 1.2s ease forwards;
+  }
+  @keyframes heroFadeUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    font-size: 12px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--green-accent); font-weight: 500;
+    margin-bottom: 20px;
+    animation: heroFadeUp 1.2s ease 0.2s both;
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 9vw, 110px);
+    font-weight: 300; color: white;
+    line-height: 1.0;
+    margin-bottom: 8px;
+    animation: heroFadeUp 1.2s ease 0.3s both;
+  }
+  .hero-title strong { font-weight: 600; color: var(--green-accent); }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 28px);
+    color: rgba(255,255,255,0.75);
+    font-style: italic; margin-bottom: 48px;
+    animation: heroFadeUp 1.2s ease 0.45s both;
+  }
+  .hero-desc {
+    max-width: 600px; margin: 0 auto 48px;
+    font-size: 16px; line-height: 1.7;
+    color: rgba(255,255,255,0.7);
+    animation: heroFadeUp 1.2s ease 0.55s both;
+  }
+  .hero-buttons {
+    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    animation: heroFadeUp 1.2s ease 0.65s both;
+  }
+  .btn-primary {
+    background: var(--green);
+    color: white; text-decoration: none;
+    padding: 16px 40px; border-radius: 4px;
+    font-size: 14px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    box-shadow: 0 8px 30px rgba(74,124,63,0.4);
+  }
+  .btn-primary:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(74,124,63,0.5);
+  }
+  .btn-outline {
+    background: transparent;
+    color: white; text-decoration: none;
+    padding: 15px 40px; border-radius: 4px;
+    font-size: 14px; font-weight: 500; letter-spacing: 1px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.4);
+    transition: all 0.3s;
+  }
+  .btn-outline:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: white;
+  }
+  .hero-scroll {
+    position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,255,255,0.5); font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; animation: bounce 2s ease-in-out infinite;
+  }
+  .hero-scroll svg { width: 20px; height: 20px; stroke: rgba(255,255,255,0.4); }
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ─── SECTIONS ─── */
+  section { position: relative; }
+  .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+
+  .reveal {
+    opacity: 0; transform: translateY(35px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* Section Header */
+  .section-header { margin-bottom: 64px; }
+  .section-tag {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--green); font-weight: 600;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+  }
+  .section-tag::before {
+    content: ''; width: 32px; height: 1px; background: var(--green);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 300; color: var(--navy);
+    line-height: 1.1;
+  }
+  .section-title strong { font-weight: 600; }
+  .section-line {
+    width: 60px; height: 3px;
+    background: linear-gradient(to right, var(--green), var(--green-accent));
+    margin-top: 20px; border-radius: 2px;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { padding: 120px 0; background: var(--warm-white); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .about-img-wrap { position: relative; }
+  .about-img-main {
+    width: 100%; aspect-ratio: 4/5;
+    object-fit: cover; border-radius: 4px;
+    box-shadow: 0 30px 80px rgba(30,42,74,0.2);
+  }
+  .about-img-accent {
+    position: absolute; bottom: -32px; right: -32px;
+    width: 55%; aspect-ratio: 1;
+    object-fit: cover; border-radius: 4px;
+    border: 6px solid white;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  }
+  .about-badge {
+    position: absolute; top: 32px; left: -20px;
+    background: var(--navy);
+    color: white; padding: 20px 24px;
+    border-radius: 4px;
+    box-shadow: 0 10px 40px rgba(30,42,74,0.3);
+  }
+  .about-badge-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px; font-weight: 600;
+    color: var(--green-accent); line-height: 1;
+  }
+  .about-badge-label { font-size: 11px; letter-spacing: 1px; opacity: 0.7; margin-top: 4px; }
+  .about-text { padding-right: 20px; }
+  .about-bullets { list-style: none; margin-top: 32px; display: flex; flex-direction: column; gap: 18px; }
+  .about-bullets li {
+    display: flex; gap: 16px; align-items: flex-start;
+    font-size: 15px; color: var(--text-mid); line-height: 1.6;
+  }
+  .about-bullets li::before {
+    content: ''; width: 8px; height: 8px; min-width: 8px;
+    border-radius: 50%; background: var(--green);
+    margin-top: 7px;
+  }
+
+  /* ─── VISION MISSION ─── */
+  #vision-mission {
+    padding: 100px 0;
+    background: var(--navy);
+    overflow: hidden;
+  }
+  .vm-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+  }
+  .vm-card {
+    padding: 64px 56px;
+    position: relative; overflow: hidden;
+  }
+  .vm-card.vision { background: rgba(255,255,255,0.04); }
+  .vm-card.mission { background: var(--green); }
+  .vm-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .vm-card.vision::before { background: rgba(255,255,255,0.2); }
+  .vm-card.mission::before { background: rgba(255,255,255,0.3); }
+  .vm-label {
+    font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+    color: rgba(255,255,255,0.5); margin-bottom: 12px; font-weight: 500;
+  }
+  .vm-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px; font-weight: 600; color: white;
+    margin-bottom: 24px; line-height: 1.1;
+  }
+  .vm-text { font-size: 16px; color: rgba(255,255,255,0.8); line-height: 1.75; }
+  .vm-text strong { color: white; font-weight: 600; }
+
+  /* ─── STORY ─── */
+  #story { padding: 120px 0; background: var(--cream); }
+  .story-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .story-points { display: flex; flex-direction: column; gap: 28px; margin-top: 40px; }
+  .story-point {
+    display: flex; gap: 20px; align-items: flex-start;
+    padding: 24px; background: white;
+    border-radius: 4px;
+    border-left: 3px solid var(--green);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .story-point:hover {
+    transform: translateX(6px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+  }
+  .story-point-icon {
+    width: 40px; height: 40px; min-width: 40px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .story-point-icon svg { width: 18px; height: 18px; stroke: white; fill: none; }
+  .story-point-text { font-size: 15px; color: var(--text-mid); line-height: 1.6; }
+  .story-img-mosaic {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 200px;
+    gap: 12px;
+  }
+  .story-img-mosaic img {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 4px;
+    transition: transform 0.4s;
+  }
+  .story-img-mosaic img:hover { transform: scale(1.03); }
+  .story-img-mosaic img:first-child {
+    grid-column: span 2; height: 240px;
+  }
+
+  /* ─── CORE VALUES ─── */
+  #values { padding: 120px 0; background: white; }
+  .values-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    margin-top: 60px;
+  }
+  .value-card {
+    padding: 36px 32px;
+    border: 1px solid #e8e8f0;
+    border-radius: 4px;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .value-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(to right, var(--green), var(--green-accent));
+    transform: scaleX(0); transition: transform 0.3s; transform-origin: left;
+  }
+  .value-card:hover { 
+    transform: translateY(-6px);
+    box-shadow: 0 20px 50px rgba(30,42,74,0.12);
+    border-color: transparent;
+  }
+  .value-card:hover::before { transform: scaleX(1); }
+  .value-icon {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, rgba(74,124,63,0.1), rgba(106,170,91,0.15));
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .value-icon svg { width: 24px; height: 24px; stroke: var(--green); fill: none; stroke-width: 1.5; }
+  .value-title { font-size: 18px; font-weight: 600; color: var(--navy); margin-bottom: 12px; }
+  .value-text { font-size: 14px; color: var(--text-light); line-height: 1.7; }
+
+  /* ─── VILLA FARM FUTURE ─── */
+  #villa {
+    padding: 120px 0;
+    background: var(--navy-deep);
+    overflow: hidden;
+    position: relative;
+  }
+  .villa-bg-pattern {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(74,124,63,0.15) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 50%, rgba(30,42,74,0.3) 0%, transparent 50%);
+  }
+  .villa-content { position: relative; z-index: 2; }
+  .villa-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(48px, 7vw, 90px);
+    font-weight: 300; color: white; line-height: 1.1;
+    margin-bottom: 60px;
+  }
+  .villa-headline span { color: var(--green-accent); font-weight: 600; }
+  .villa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .villa-text { font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.8; }
+  .villa-text p + p { margin-top: 20px; }
+  .villa-features { display: flex; flex-direction: column; gap: 20px; }
+  .villa-feature {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    transition: background 0.3s;
+  }
+  .villa-feature:hover { background: rgba(74,124,63,0.15); }
+  .villa-feature-icon {
+    width: 36px; height: 36px; min-width: 36px;
+    background: var(--green);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .villa-feature-icon svg { width: 16px; height: 16px; stroke: white; fill: none; }
+  .villa-feature-title { font-size: 15px; font-weight: 600; color: white; margin-bottom: 4px; }
+  .villa-feature-text { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+  /* ─── MANAGEMENT ─── */
+  #management { padding: 120px 0; background: var(--cream); }
+  .mgmt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 60px; }
+  .mgmt-card {
+    background: white;
+    border-radius: 4px; overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .mgmt-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+  }
+  .mgmt-card-header {
+    background: var(--navy);
+    padding: 40px; position: relative; overflow: hidden;
+  }
+  .mgmt-card-header::before {
+    content: '';
+    position: absolute; bottom: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+  }
+  .mgmt-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px; font-weight: 600; color: white;
+    margin-bottom: 6px;
+  }
+  .mgmt-role {
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--green-accent); font-weight: 500;
+  }
+  .mgmt-card-body { padding: 36px 40px; }
+  .mgmt-points { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+  .mgmt-points li {
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 14px; color: var(--text-mid); line-height: 1.6;
+  }
+  .mgmt-points li::before {
+    content: '▶'; color: var(--green); font-size: 10px; margin-top: 4px; flex-shrink: 0;
+  }
+
+  /* ─── INVESTMENT ─── */
+  #investment {
+    padding: 120px 0;
+    background: 
+      linear-gradient(160deg, rgba(20,28,53,0.92) 0%, rgba(30,42,74,0.85) 100%),
+      url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1920&q=80') center/cover no-repeat;
+    background-attachment: fixed;
+  }
+  .inv-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; margin-top: 60px; }
+  .inv-card {
+    padding: 40px 32px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+  }
+  .inv-card:hover {
+    background: rgba(74,124,63,0.2);
+    border-color: var(--green-accent);
+    transform: translateY(-6px);
+  }
+  .inv-card-icon {
+    font-size: 32px; margin-bottom: 20px;
+  }
+  .inv-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 600; color: white;
+    margin-bottom: 14px;
+  }
+  .inv-card-text { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.7; }
+
+  /* ─── PROJECTS ─── */
+  #projects { padding: 120px 0; background: white; }
+  .projects-intro { text-align: center; max-width: 700px; margin: 0 auto 80px; }
+  .projects-intro .section-tag { justify-content: center; }
+  .projects-intro .section-tag::before { display: none; }
+  .projects-intro .section-line { margin: 20px auto; }
+  .project-tabs {
+    display: flex; gap: 4px; justify-content: center;
+    background: var(--cream); padding: 6px;
+    border-radius: 8px; margin-bottom: 60px;
+    width: fit-content; margin-left: auto; margin-right: auto;
+  }
+  .project-tab {
+    padding: 12px 28px; border-radius: 6px;
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; border: none;
+    background: transparent; color: var(--text-mid);
+    transition: all 0.3s;
+  }
+  .project-tab.active {
+    background: white;
+    color: var(--navy);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  }
+  .project-panel { display: none; }
+  .project-panel.active { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  
+  .rayan-west-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .rw-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 36px; }
+  .rw-stat {
+    background: var(--cream); padding: 24px;
+    border-radius: 4px; text-align: center;
+    border-bottom: 3px solid var(--green);
+  }
+  .rw-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 44px; font-weight: 600; color: var(--green);
+    line-height: 1;
+  }
+  .rw-stat-label { font-size: 13px; color: var(--text-light); margin-top: 6px; }
+  .rw-features { display: flex; flex-direction: column; gap: 20px; }
+  .rw-feature { border-left: 3px solid var(--green); padding: 16px 20px; }
+  .rw-feature-title { font-size: 17px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .rw-feature-text { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+  
+  .coming-soon-banner {
+    background: var(--navy);
+    border-radius: 4px; padding: 80px 60px;
+    text-align: center;
+  }
+  .cs-eyebrow { font-size: 11px; letter-spacing: 4px; color: var(--green-accent); text-transform: uppercase; font-weight: 500; margin-bottom: 16px; }
+  .cs-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px; font-weight: 600; color: white;
+    margin-bottom: 24px;
+  }
+  .cs-title span { color: var(--green-accent); }
+  .cs-text { font-size: 16px; color: rgba(255,255,255,0.7); line-height: 1.7; max-width: 600px; margin: 0 auto 40px; }
+  .cs-badge {
+    display: inline-block;
+    background: var(--green);
+    color: white; padding: 10px 28px;
+    border-radius: 100px;
+    font-size: 13px; font-weight: 600; letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ─── EGYPT AGRI ─── */
+  #egypt { padding: 120px 0; background: var(--cream); }
+  .egypt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+  .egypt-col-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 600; color: var(--navy);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--green);
+  }
+  .egypt-text { font-size: 15px; color: var(--text-mid); line-height: 1.8; }
+  .egypt-text p + p { margin-top: 16px; }
+  .egypt-text strong { color: var(--green); }
+
+  /* ─── PARTNERS ─── */
+  #partners { padding: 120px 0; background: white; }
+  .partners-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 60px; }
+  .partner-card {
+    border: 1px solid #e8e8f0; border-radius: 4px; overflow: hidden;
+    transition: box-shadow 0.3s, transform 0.3s;
+  }
+  .partner-card:hover {
+    box-shadow: 0 16px 50px rgba(0,0,0,0.1);
+    transform: translateY(-4px);
+  }
+  .partner-header {
+    padding: 32px 36px;
+    background: var(--navy);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .partner-logo-text {
+    font-size: 28px; font-weight: 800;
+    color: white; letter-spacing: -0.5px;
+  }
+  .partner-logo-text span { color: var(--green-accent); }
+  .partner-body { padding: 32px 36px; }
+  .partner-section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px; font-weight: 600; color: var(--navy);
+    margin-bottom: 16px; border-bottom: 2px solid var(--green);
+    padding-bottom: 12px;
+  }
+  .partner-text { font-size: 14px; color: var(--text-mid); line-height: 1.7; }
+  .partner-text + .partner-section-title { margin-top: 28px; }
+
+  /* ─── SUSTAINABILITY ─── */
+  #sustainability {
+    padding: 120px 0;
+    background: var(--navy);
+    position: relative; overflow: hidden;
+  }
+  #sustainability::before {
+    content: '';
+    position: absolute; top: -50%; left: -10%;
+    width: 70%; height: 200%;
+    background: radial-gradient(ellipse, rgba(74,124,63,0.15) 0%, transparent 60%);
+  }
+  .sust-content { position: relative; z-index: 2; }
+  .sust-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .sust-text { font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.8; }
+  .sust-text p + p { margin-top: 20px; }
+  .sust-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .sust-feature {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 28px 24px; border-radius: 4px;
+  }
+  .sust-feature-icon { font-size: 28px; margin-bottom: 12px; }
+  .sust-feature-title { font-size: 16px; font-weight: 600; color: var(--green-accent); margin-bottom: 8px; }
+  .sust-feature-text { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+
+  /* ─── CONTACT ─── */
+  #contact { padding: 120px 0; background: var(--cream); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
+  .contact-info { }
+  .contact-item {
+    display: flex; gap: 20px; align-items: flex-start;
+    margin-bottom: 32px; padding-bottom: 32px;
+    border-bottom: 1px solid #e0ddd8;
+  }
+  .contact-item:last-child { border-bottom: none; }
+  .contact-item-icon {
+    width: 48px; height: 48px; min-width: 48px;
+    background: var(--navy);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  }
+  .contact-item-icon svg { width: 20px; height: 20px; stroke: var(--green-accent); fill: none; stroke-width: 1.5; }
+  .contact-item-label { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--green); font-weight: 600; margin-bottom: 4px; }
+  .contact-item-value { font-size: 16px; color: var(--navy); font-weight: 500; }
+  .contact-item-value a { color: var(--navy); text-decoration: none; transition: color 0.3s; }
+  .contact-item-value a:hover { color: var(--green); }
+  .contact-form-wrap {
+    background: white;
+    padding: 48px; border-radius: 4px;
+    box-shadow: 0 12px 50px rgba(0,0,0,0.08);
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px; font-weight: 600; color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .form-subtitle { font-size: 14px; color: var(--text-light); margin-bottom: 32px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label {
+    display: block; font-size: 12px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    color: var(--navy); margin-bottom: 8px;
+  }
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: 14px 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px; font-size: 14px;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-dark);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    outline: none;
+    background: var(--warm-white);
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(74,124,63,0.1);
+  }
+  .form-group textarea { min-height: 120px; resize: vertical; }
+  .form-submit {
+    width: 100%; background: var(--green);
+    color: white; border: none;
+    padding: 18px; border-radius: 4px;
+    font-size: 14px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .form-submit:hover {
+    background: var(--green-light);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(74,124,63,0.3);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--navy-deep);
+    padding: 64px 0 32px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
+  .footer-top {
+    display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 48px; padding-bottom: 48px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 32px;
+  }
+  .footer-brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 600; color: white;
+    margin-bottom: 8px;
+  }
+  .footer-brand-name span { color: var(--green-accent); }
+  .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.4); font-style: italic; margin-bottom: 20px; }
+  .footer-col-title {
+    font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--green-accent); font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a {
+    font-size: 14px; color: rgba(255,255,255,0.55);
+    text-decoration: none; transition: color 0.3s;
+  }
+  .footer-col ul a:hover { color: white; }
+  .footer-bottom {
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px; color: rgba(255,255,255,0.35);
+  }
+  .footer-bottom a { color: var(--green-accent); text-decoration: none; }
+
+  /* ─── STATS TICKER ─── */
+  .stats-bar {
+    background: var(--navy);
+    padding: 20px 0;
+    overflow: hidden;
+  }
+  .stats-ticker {
+    display: flex; gap: 80px;
+    animation: ticker 30s linear infinite;
+    white-space: nowrap;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .stat-item {
+    display: flex; align-items: center; gap: 12px;
+    flex-shrink: 0;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px; font-weight: 600; color: var(--green-accent);
+  }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,0.6); }
+  .stat-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.15); }
+
+  /* ─── LIFESTYLE ─── */
+  #lifestyle {
+    padding: 120px 0; background: white;
+  }
+  .lifestyle-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; margin: 60px -48px 0; }
+  .lifestyle-item {
+    aspect-ratio: 3/4; position: relative; overflow: hidden;
+    cursor: pointer;
+  }
+  .lifestyle-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .lifestyle-item:hover img { transform: scale(1.08); }
+  .lifestyle-item-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(20,28,53,0.85) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 20px;
+  }
+  .lifestyle-item:hover .lifestyle-item-overlay { opacity: 1; }
+  .lifestyle-item-label { font-size: 14px; font-weight: 600; color: white; }
+
+  /* Choosing section */
+  #choosing { padding: 120px 0; background: var(--cream); }
+  .choosing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+  .choosing-list { display: flex; flex-direction: column; gap: 4px; margin-top: 36px; }
+  .choosing-item {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    border-bottom: 1px solid #ddd;
+    transition: background 0.2s;
+  }
+  .choosing-item:hover { background: white; }
+  .choosing-title {
+    padding: 20px 24px; font-size: 16px; font-weight: 600;
+    color: var(--navy); border-right: 1px solid #ddd;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .choosing-title::before {
+    content: '→'; color: var(--green); font-size: 18px;
+    flex-shrink: 0;
+  }
+  .choosing-desc { padding: 20px 24px; font-size: 14px; color: var(--text-light); line-height: 1.6; display: flex; align-items: center; }
+
+  @media (max-width: 900px) {
+    .about-grid, .story-grid, .vm-grid, .villa-grid, .mgmt-grid,
+    .inv-grid, .egypt-grid, .partners-grid, .sust-grid, .contact-grid,
+    .rayan-west-grid, .choosing-grid, .values-grid, .footer-top { grid-template-columns: 1fr; }
+    .section-inner { padding: 0 24px; }
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .lifestyle-grid { grid-template-columns: repeat(2, 1fr); margin: 40px -24px 0; }
+    .form-row { grid-template-columns: 1fr; }
+    .about-img-accent { display: none; }
+    .about-badge { left: 16px; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#hero" class="nav-logo">
+    <div class="nav-logo-mark">G</div>
+    <div class="nav-logo-text">LA <span>GRANJA</span></div>
+  </a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#values">Values</a>
+    <a href="#projects">Projects</a>
+    <a href="#egypt">Egypt</a>
+    <a href="#partners">Partners</a>
+    <a href="#contact" class="nav-cta">Contact Us</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Redefining Modern Living</div>
+    <div class="hero-title">LA <strong>GRANJA</strong></div>
+    <div class="hero-sub">Your Life In The Heart Of Nature</div>
+    <div class="hero-desc">
+      Born from a bold vision — to transform the way we live by reuniting people with the land. 
+      Agricultural compounds that merge modern homes with fertile farmland.
+    </div>
+    <div class="hero-buttons">
+      <a href="#projects" class="btn-primary">Explore Projects</a>
+      <a href="#about" class="btn-outline">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- STATS TICKER -->
+<div class="stats-bar">
+  <div class="stats-ticker">
+    <div class="stat-item"><div class="stat-num">100</div><div class="stat-label">Acres — Rayan West</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num">94</div><div class="stat-label">Farms Available</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num">30</div><div class="stat-label">Barhi Palm Trees Per Farm</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num">17+</div><div class="stat-label">Years — Sun Gate Expertise</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num">2008</div><div class="stat-label">El Fath Founded</div></div>
+    <div class="stat-divider"></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="stat-item"><div class="stat-num">100</div><div class="stat-label">Acres — Rayan West</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num">94</div><div class="stat-label">Farms Available</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num">30</div><div class="stat-label">Barhi Palm Trees Per Farm</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num">17+</div><div class="stat-label">Years — Sun Gate Expertise</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-item"><div class="stat-num">2008</div><div class="stat-label">El Fath Founded</div></div>
+    <div class="stat-divider"></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <img class="about-img-main" 
+          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" 
+          alt="La Granja Villa" loading="lazy">
+        <img class="about-img-accent"
+          src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=500&q=80"
+          alt="Farm" loading="lazy">
+        <div class="about-badge">
+          <div class="about-badge-num">3</div>
+          <div class="about-badge-label">Projects<br>Launched</div>
+        </div>
+      </div>
+      <div class="about-text">
+        <div class="reveal reveal-delay-1">
+          <div class="section-header">
+            <div class="section-tag">Who We Are</div>
+            <h2 class="section-title">About <strong>La Granja</strong></h2>
+            <div class="section-line"></div>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-2" style="font-size:16px;color:var(--text-mid);line-height:1.8;">
+          La Granja is a development company redefining the way people live by creating agricultural compounds that unite modern homes with fertile farmland. We offer families a lifestyle that is healthier, more balanced, and closer to nature — without giving up the comfort and convenience of city life.
+        </div>
+        <ul class="about-bullets reveal reveal-delay-3">
+          <li>Each La Granja community is designed around a simple idea: a home that gives back. Residents enjoy the beauty of contemporary villas while benefiting from productive land that can generate income.</li>
+          <li>Our compounds offer a lifestyle as sustainable as it is rewarding — where every home is surrounded by fertile farmland.</li>
+          <li>We are lifestyle creators, offering spaces where people can live better today while building value for the future.</li>
+          <li>La Granja was born to turn a vision into reality — agriculture, sustainability, and modern life together, just an hour from the city.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION & MISSION -->
+<section id="vision-mission">
+  <div class="section-inner">
+    <div class="reveal" style="margin-bottom:48px;">
+      <div class="section-tag" style="color:var(--green-accent);">Our Direction</div>
+      <h2 class="section-title" style="color:white;">Vision <strong style="color:var(--green-accent);">&</strong> Mission</h2>
+    </div>
+  </div>
+  <div class="vm-grid reveal">
+    <div class="vm-card vision">
+      <div class="vm-label">Our Vision</div>
+      <div class="vm-title">Inspiring a Lifestyle Movement</div>
+      <div class="vm-text">
+        To inspire a lifestyle movement where every home is more than just a shelter — <strong>it is a source of wellness, sustainability, and value.</strong>
+        <br><br>
+        We envision vibrant communities surrounded by fertile soil, where every home offers comfort, every acre holds potential, and every investment grows.
+      </div>
+    </div>
+    <div class="vm-card mission">
+      <div class="vm-label">Our Mission</div>
+      <div class="vm-title">Communities Rooted in Nature</div>
+      <div class="vm-text">
+        We create communities that reconnect people with nature, foster sustainable practices, and provide spaces where life and investment grow hand in hand.
+        <br><br>
+        Our agricultural compounds allow families to live surrounded by nature, enjoy farm-to-table abundance, and breathe freely — all while knowing that their home and land remain valuable, long-term assets.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUR STORY -->
+<section id="story">
+  <div class="section-inner">
+    <div class="story-grid">
+      <div>
+        <div class="reveal">
+          <div class="section-header">
+            <div class="section-tag">Our Journey</div>
+            <h2 class="section-title">Our <strong>Story</strong></h2>
+            <div class="section-line"></div>
+          </div>
+        </div>
+        <div class="story-points">
+          <div class="story-point reveal reveal-delay-1">
+            <div class="story-point-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="story-point-text">It all started with a simple dream: to create a life where modern living meets nature, where comfort and sustainability go hand in hand.</div>
+          </div>
+          <div class="story-point reveal reveal-delay-2">
+            <div class="story-point-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="story-point-text">The founders of La Granja saw the need for a place that blends the peace of the countryside with the convenience of being close to the city.</div>
+          </div>
+          <div class="story-point reveal reveal-delay-3">
+            <div class="story-point-icon">
+              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="story-point-text">They envisioned vibrant communities surrounded by fertile soil, where every home offers comfort, every acre holds potential, and every investment grows.</div>
+          </div>
+          <div class="story-point reveal reveal-delay-4">
+            <div class="story-point-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="story-point-text">La Granja was born to turn this vision into reality: a lifestyle where agriculture, sustainability, and modern life come together — just an hour away from the city.</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="story-img-mosaic">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Villa and Farm" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80" alt="Farmland" loading="lazy">
+          <img src="https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=400&q=80" alt="Greenhouse" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORE VALUES -->
+<section id="values">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;margin-bottom:0;">
+      <div class="section-tag" style="justify-content:center;"><span style="display:inline-block;width:32px;height:1px;background:var(--green);"></span>&nbsp;&nbsp;What We Stand For</div>
+      <h2 class="section-title">Our Core <strong>Values</strong></h2>
+      <div class="section-line" style="margin:20px auto;"></div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="value-title">Community</div>
+        <div class="value-text">Life is richer when shared. Our developments foster strong connections between neighbors where families can grow together, share experiences, and create a culture of belonging.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="value-title">Integrity</div>
+        <div class="value-text">We are guided by honesty, transparency, and trust. Every project we deliver reflects our commitment to doing the right thing for our residents, our partners, and our environment.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <div class="value-title">Sustainability</div>
+        <div class="value-text">We believe in living in harmony with the earth. Every La Granja community is designed with eco-friendly practices that protect natural resources and ensure a lifestyle future generations can enjoy.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-1">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"/><path d="M12 6v6l4 2"/></svg>
+        </div>
+        <div class="value-title">Prosperity</div>
+        <div class="value-text">We measure success not only by financial growth, but by the quality of life our communities bring. At La Granja, prosperity means a lifestyle that is rewarding, meaningful, and naturally abundant.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-2">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="value-title">Wellness</div>
+        <div class="value-text">True wealth begins with well-being. Our compounds are designed to nurture healthier lifestyles — from fresh air and natural produce to open spaces that promote physical and emotional balance for families.</div>
+      </div>
+      <div class="value-card reveal reveal-delay-3">
+        <div class="value-icon">
+          <svg viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        </div>
+        <div class="value-title">Innovation</div>
+        <div class="value-text">We embrace new ideas that blend technology, design, and agriculture to create smarter, more efficient communities. Innovation at La Granja means reimagining modern living while staying connected to the land.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR VILLA YOUR FARM YOUR FUTURE -->
+<section id="villa">
+  <div class="villa-bg-pattern"></div>
+  <div class="section-inner villa-content">
+    <div class="reveal">
+      <div class="villa-headline">
+        Your <span>Villa</span><br>
+        Your <span>Farm</span><br>
+        Your <span>Future</span>
+      </div>
+    </div>
+    <div class="villa-grid">
+      <div class="villa-text reveal reveal-delay-1">
+        <p>At La Granja, we believe that a home should be more than walls and a roof — it should be a source of wellness, purpose, and prosperity. That belief is what gave birth to our unique concept: agricultural compounds that merge modern living with productive farmland.</p>
+        <p>Each La Granja development offers residents a contemporary villa designed for comfort and elegance, paired with fertile land that can be cultivated for fresh produce or managed for profit.</p>
+        <p>This blend creates a lifestyle that is both rewarding and sustainable — where families can enjoy the peace of nature, the benefits of farm-to-table living, and the financial value of land ownership.</p>
+        <div style="margin-top:36px;">
+          <a href="#projects" class="btn-primary">View Our Projects</a>
+        </div>
+      </div>
+      <div class="villa-features reveal reveal-delay-2">
+        <div class="villa-feature">
+          <div class="villa-feature-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+          <div>
+            <div class="villa-feature-title">Reconnect with Nature</div>
+            <div class="villa-feature-text">Without sacrificing modern conveniences — the best of both worlds in one community.</div>
+          </div>
+        </div>
+        <div class="villa-feature">
+          <div class="villa-feature-icon"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l7.78-7.78a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div>
+            <div class="villa-feature-title">Promote Healthier Living</div>
+            <div class="villa-feature-text">Through open spaces, fresh air, and access to natural produce grown on your own land.</div>
+          </div>
+        </div>
+        <div class="villa-feature">
+          <div class="villa-feature-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div>
+            <div class="villa-feature-title">Encourage Sustainability</div>
+            <div class="villa-feature-text">Eco-friendly design combined with productive land for a future-proof lifestyle investment.</div>
+          </div>
+        </div>
+        <div class="villa-feature">
+          <div class="villa-feature-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div>
+            <div class="villa-feature-title">Value Beyond Ownership</div>
+            <div class="villa-feature-text">A home that can generate income and offer long-term stability — your land, your legacy.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANAGEMENT -->
+<section id="management">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-tag" style="justify-content:center;">Leadership</div>
+      <h2 class="section-title">Management <strong>Structure</strong></h2>
+      <div class="section-line" style="margin:20px auto;"></div>
+    </div>
+    <div class="mgmt-grid">
+      <div class="mgmt-card reveal reveal-delay-1">
+        <div class="mgmt-card-header">
+          <div class="mgmt-name">Ahmed Galal</div>
+          <div class="mgmt-role">Co-Founder</div>
+        </div>
+        <div class="mgmt-card-body">
+          <ul class="mgmt-points">
+            <li>Experienced architecture engineer and founder of El Fath Construction Company, established in 2008, with a strong background in construction.</li>
+            <li>Dream Future was established in 2012 and played a pivotal role in the construction of the 2022 FIFA World Cup Stadiums in Qatar.</li>
+            <li>Actively involved in the industry since 2008, overseeing major state projects across Egypt.</li>
+            <li>Key projects include the high-speed train project in Suez and numerous other government-related ventures.</li>
+            <li>His leadership has been pivotal in shaping La Granja's vision of integrating modern infrastructure with sustainable living.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mgmt-card reveal reveal-delay-2">
+        <div class="mgmt-card-header">
+          <div class="mgmt-name">Mohamed Ragab</div>
+          <div class="mgmt-role">Co-Founder</div>
+        </div>
+        <div class="mgmt-card-body">
+          <ul class="mgmt-points">
+            <li>Agricultural developer and owner of Elite for Agricultural Development.</li>
+            <li>Working in agricultural investment and development since 2020, focusing on sustainable and productive agricultural solutions.</li>
+            <li>Has worked on several significant projects, including those in El Alamein, New Valley, and the West Assiut project.</li>
+            <li>His expertise in agricultural development and investment plays a key role in shaping La Granja's vision.</li>
+            <li>Integrating modern living with fertile land for a sustainable future that benefits both residents and the environment.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INVESTMENT VISION -->
+<section id="investment">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-tag" style="color:var(--green-accent);">Financial Strategy</div>
+      <h2 class="section-title" style="color:white;">Investment <strong style="color:var(--green-accent);">Vision</strong></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="inv-grid">
+      <div class="inv-card reveal reveal-delay-1">
+        <div class="inv-card-icon">🌱</div>
+        <div class="inv-card-title">Rooted in Growth & Balance</div>
+        <div class="inv-card-text">La Granja redefines investment by merging financial prosperity with environmental integrity. Each element — from architecture to landscape — is crafted for enduring value. Growth is measured in lasting harmony between nature and opportunity.</div>
+      </div>
+      <div class="inv-card reveal reveal-delay-2">
+        <div class="inv-card-icon">♻️</div>
+        <div class="inv-card-title">Sustainable Profitability</div>
+        <div class="inv-card-text">Profit with Purpose. La Granja's eco-efficient infrastructure reduces operational costs and enhances long-term returns. By aligning sustainability with profitability, it offers investors a future-proof asset meeting growing global demand for green investments.</div>
+      </div>
+      <div class="inv-card reveal reveal-delay-3">
+        <div class="inv-card-icon">📈</div>
+        <div class="inv-card-title">Nature-Driven ROI</div>
+        <div class="inv-card-text">Every aspect of La Granja's environment contributes to its ecological desirability and market value. The project's biophilic design and green spaces turn nature into a key driver of returns that grow naturally.</div>
+      </div>
+      <div class="inv-card reveal reveal-delay-1">
+        <div class="inv-card-icon">📍</div>
+        <div class="inv-card-title">Location & Growth</div>
+        <div class="inv-card-text">Strategically positioned for expansion, La Granja offers both convenience and exclusivity. Its strategic location and sustainable vision ensure steady value appreciation and strong investor confidence.</div>
+      </div>
+      <div class="inv-card reveal reveal-delay-2">
+        <div class="inv-card-icon">🏛️</div>
+        <div class="inv-card-title">Legacy Investment</div>
+        <div class="inv-card-text">La Granja is more than an investment — it's a statement of enduring purpose. It invites investors to participate in a project that delivers lasting returns, ethical growth, and timeless prestige for generations to come.</div>
+      </div>
+      <div class="inv-card reveal reveal-delay-3">
+        <div class="inv-card-icon">🤝</div>
+        <div class="inv-card-title">Lifestyle as Wealth</div>
+        <div class="inv-card-text">The greatest return comes from the life you live. At La Granja, true wealth is measured in health, balance, and well-being. Every property is a living asset that nurtures your family and sustains your financial stability.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="projects-intro reveal">
+      <div class="section-tag">Our Developments</div>
+      <h2 class="section-title">Our <strong>Projects</strong></h2>
+      <div class="section-line"></div>
+      <p style="margin-top:20px;font-size:16px;color:var(--text-light);line-height:1.7;">Three distinctive projects, one unwavering vision — communities where modern living and sustainable agriculture exist side by side.</p>
+    </div>
+    <div class="project-tabs reveal">
+      <button class="project-tab active" onclick="switchTab('rayan-west', this)">01 — Rayan West</button>
+      <button class="project-tab" onclick="switchTab('rayan-hills', this)">02 — Rayan Hills</button>
+      <button class="project-tab" onclick="switchTab('ghernata', this)">03 — Ghernata</button>
+    </div>
+
+    <!-- RAYAN WEST -->
+    <div id="rayan-west" class="project-panel active">
+      <div class="rayan-west-grid">
+        <div>
+          <div style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--green);font-weight:600;margin-bottom:12px;">Project 01</div>
+          <h3 style="font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:600;color:var(--navy);margin-bottom:8px;">RAYAN <span style="color:var(--green);">WEST</span></h3>
+          <div style="font-size:14px;color:var(--text-light);margin-bottom:24px;font-style:italic;">Create Your Farm — Fayoum Asyut Road</div>
+          <div style="font-size:15px;color:var(--text-mid);line-height:1.8;margin-bottom:24px;">Rayan West is not just another agricultural project — it stands out as a one-of-a-kind investment that goes beyond offering a simple villa or a piece of land.</div>
+          <div class="rw-stat-grid">
+            <div class="rw-stat"><div class="rw-stat-num">100</div><div class="rw-stat-label">Total Acres</div></div>
+            <div class="rw-stat"><div class="rw-stat-num">94</div><div class="rw-stat-label">Available Farms</div></div>
+            <div class="rw-stat"><div class="rw-stat-num">30</div><div class="rw-stat-label">Barhi Palm Trees</div></div>
+            <div class="rw-stat"><div class="rw-stat-num">1h</div><div class="rw-stat-label">From Cairo</div></div>
+          </div>
+        </div>
+        <div class="rw-features">
+          <div class="rw-feature">
+            <div class="rw-feature-title">Modern Living Meets Productive Farmland</div>
+            <div class="rw-feature-text">A complete lifestyle experience combining contemporary residential comfort with fertile farmland, ensuring steady income for residents.</div>
+          </div>
+          <div class="rw-feature">
+            <div class="rw-feature-title">Prime Location</div>
+            <div class="rw-feature-text">Situated along the Fayoum Asyut Road, only an hour's drive from Cairo. Rayan West offers the perfect balance: the tranquility of nature without losing connection to the city.</div>
+          </div>
+          <div class="rw-feature">
+            <div class="rw-feature-title">Architectural Elegance</div>
+            <div class="rw-feature-text">Villas are built in an Andalusian-inspired design, blending beauty with practicality. Natural ventilation domes ensure interiors remain cool, fresh, and healthy throughout the year.</div>
+          </div>
+          <div class="rw-feature">
+            <div class="rw-feature-title">Each Farm Includes</div>
+            <div class="rw-feature-text">Productive greenhouses · 30 Barhi palm trees · Land ready for intercropping — a self-sustaining system designed for environmental, social, and economic sustainability.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RAYAN HILLS -->
+    <div id="rayan-hills" class="project-panel">
+      <div class="coming-soon-banner">
+        <div class="cs-eyebrow">Project 02</div>
+        <div class="cs-title">RAYAN <span>HILLS</span></div>
+        <div class="cs-text">A new horizon for life and investment. Rayan Hills will embrace the same philosophy that defines La Granja — combining elegant modern villas, fertile land, and a lifestyle rooted in nature. It represents the continuation of our mission to redefine how people live, invest, and connect with the land.</div>
+        <span class="cs-badge">Coming Soon</span>
+      </div>
+    </div>
+
+    <!-- GHERNATA -->
+    <div id="ghernata" class="project-panel">
+      <div class="coming-soon-banner">
+        <div class="cs-eyebrow">Project 03</div>
+        <div class="cs-title"><span>GHERNATA</span></div>
+        <div class="cs-text">While details are yet to be revealed, Ghernata will carry forward the La Granja vision — bringing together sophisticated architecture, productive agricultural land, and a community lifestyle that is both rewarding and sustainable. This is only the beginning.</div>
+        <span class="cs-badge">Coming Soon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EGYPT'S AGRICULTURAL FUTURE -->
+<section id="egypt">
+  <div class="section-inner">
+    <div class="reveal">
+      <div class="section-header">
+        <div class="section-tag">National Context</div>
+        <h2 class="section-title">Egypt's Agricultural <strong>Future</strong></h2>
+        <div class="section-line"></div>
+        <p style="margin-top:16px;font-size:16px;color:var(--text-mid);">Egypt is shaping a new agricultural era — and La Granja is at the heart of it.</p>
+      </div>
+    </div>
+    <div class="egypt-grid">
+      <div class="reveal reveal-delay-1">
+        <div class="egypt-col-title">Egypt's Agricultural Ambitions</div>
+        <div class="egypt-text">
+          <p>Egypt is investing heavily in agriculture to secure food supply and boost exports. The FY 2025/2026 plan allocates <strong>EGP 17.5 billion</strong> to modernize farming, increase productivity and expand greenhouses.</p>
+          <p>The strategy includes reclaiming land to reach <strong>12 million feddans by 2030</strong>, using smart irrigation, high-yield crops, and major reclamation projects like Toshka, the New Delta, and Sinai.</p>
+          <p>Egypt's <strong>Vision 2030</strong> further emphasizes technology-driven, sustainable farming through AI, modern irrigation, and climate-adaptive practices.</p>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="egypt-col-title">La Granja: Investing in Egypt's Agricultural Tomorrow</div>
+        <div class="egypt-text">
+          <p>As Egypt embraces a modern, sustainable agricultural future, La Granja stands at the forefront — combining contemporary living with productive farmland. Every home is part of a living ecosystem where comfort, nature, and effortless income coexist.</p>
+          <p>Just outside Cairo, La Granja offers rural tranquility with city accessibility, while certified green contracts ensure secure, long-term investment — making it a model for Egypt's next generation of agriculture.</p>
+        </div>
+        <div style="margin-top:28px;display:flex;gap:20px;flex-wrap:wrap;">
+          <div style="background:var(--navy);color:white;padding:20px 28px;border-radius:4px;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--green-accent);font-weight:600;">17.5B</div>
+            <div style="font-size:12px;opacity:0.7;margin-top:4px;">EGP Agricultural Budget</div>
+          </div>
+          <div style="background:var(--navy);color:white;padding:20px 28px;border-radius:4px;text-align:center;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--green-accent);font-weight:600;">12M</div>
+            <div style="font-size:12px;opacity:0.7;margin-top:4px;">Feddans Target by 2030</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHOOSING AN AGRICULTURAL COMPOUND -->
+<section id="choosing">
+  <div class="section-inner">
+    <div class="choosing-grid">
+      <div>
+        <div class="reveal">
+          <div class="section-tag">Why Choose Us</div>
+          <h2 class="section-title">Choosing an <strong>Agricultural Compound</strong></h2>
+          <div class="section-line"></div>
+          <p style="margin-top:24px;font-size:16px;color:var(--text-mid);line-height:1.8;">La Granja creates communities for people who want more than four walls. They want a life that is vibrant, sustainable, and rewarding.</p>
+          <p style="margin-top:16px;font-size:15px;color:var(--text-light);line-height:1.7;">By choosing an agricultural compound, you are not just buying property — you are investing in a way of life.</p>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="choosing-list">
+          <div class="choosing-item">
+            <div class="choosing-title">Return to Balance</div>
+            <div class="choosing-desc">A life rooted in nature yet supported by modern design and amenities.</div>
+          </div>
+          <div class="choosing-item">
+            <div class="choosing-title">Healthier Living</div>
+            <div class="choosing-desc">Fresh air, open landscapes, and a direct connection to nature every single day.</div>
+          </div>
+          <div class="choosing-item">
+            <div class="choosing-title">Family Well-Being</div>
+            <div class="choosing-desc">Sustainable communities where children can grow closer to the land.</div>
+          </div>
+          <div class="choosing-item">
+            <div class="choosing-title">Sustainability</div>
+            <div class="choosing-desc">Eco-friendly practices and farmland that give back to both you and the environment.</div>
+          </div>
+          <div class="choosing-item">
+            <div class="choosing-title">Value That Lasts</div>
+            <div class="choosing-desc">Beyond lifestyle, your land is a long-term asset able to generate income and hold future value.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUSTAINABILITY -->
+<section id="sustainability">
+  <div class="section-inner sust-content">
+    <div class="sust-grid">
+      <div>
+        <div class="reveal">
+          <div class="section-tag" style="color:var(--green-accent);">Our Commitment</div>
+          <h2 class="section-title" style="color:white;">Sustainability as a <strong style="color:var(--green-accent);">Way of Life</strong></h2>
+          <div class="section-line"></div>
+        </div>
+        <div class="sust-text reveal reveal-delay-1" style="margin-top:32px;">
+          <p>At La Granja, sustainability is not an option — it is the foundation of how we live and build. We believe that caring for the environment and caring for ourselves are one and the same.</p>
+          <p>From eco-friendly infrastructure to fertile land that produces natural food, sustainability is woven into daily life. Residents breathe cleaner air, eat fresher produce, and enjoy spaces designed to reduce stress and promote well-being.</p>
+          <p>Beyond the personal benefits, this approach also preserves the land, reduces waste, and ensures that each home adds value not only for its owners, but for the world around it.</p>
+        </div>
+      </div>
+      <div class="sust-features reveal reveal-delay-2">
+        <div class="sust-feature">
+          <div class="sust-feature-icon">🌿</div>
+          <div class="sust-feature-title">Eco-Friendly Infrastructure</div>
+          <div class="sust-feature-text">Every structure is built with green principles, minimizing environmental impact and maximizing energy efficiency.</div>
+        </div>
+        <div class="sust-feature">
+          <div class="sust-feature-icon">🌾</div>
+          <div class="sust-feature-title">Productive Farmland</div>
+          <div class="sust-feature-text">Fertile land that produces natural, fresh food while creating a direct connection between residents and the earth.</div>
+        </div>
+        <div class="sust-feature">
+          <div class="sust-feature-icon">💧</div>
+          <div class="sust-feature-title">Smart Irrigation</div>
+          <div class="sust-feature-text">Modern water management systems that conserve resources and optimize agricultural productivity throughout the year.</div>
+        </div>
+        <div class="sust-feature">
+          <div class="sust-feature-icon">🌳</div>
+          <div class="sust-feature-title">Green Communities</div>
+          <div class="sust-feature-text">Designed to help families live closer to nature, conserve resources, and create a lifestyle that future generations can enjoy.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
+<section id="partners">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;">
+      <div class="section-tag" style="justify-content:center;">Strategic Alliances</div>
+      <h2 class="section-title">Our <strong>Partners</strong></h2>
+      <div class="section-line" style="margin:20px auto;"></div>
+      <p style="margin-top:16px;font-size:16px;color:var(--text-light);max-width:600px;margin-left:auto;margin-right:auto;line-height:1.7;">La Granja is proud to work alongside Egypt's leading organizations in agriculture and construction.</p>
+    </div>
+    <div class="partners-grid">
+      <div class="partner-card reveal reveal-delay-1">
+        <div class="partner-header">
+          <div class="partner-logo-text">☀️ SUN <span>GATE</span></div>
+        </div>
+        <div class="partner-body">
+          <div class="partner-section-title">About Sun Gate</div>
+          <div class="partner-text">La Granja is proud to partner with Sun Gate, one of Egypt's leading names in food production, trading, and export. With over 17 years of expertise, Sun Gate has built a strong reputation for delivering premium food products to local and international markets, known for innovation and reliability with strict quality standards.</div>
+          <div class="partner-section-title" style="margin-top:24px;">Sun Gate's Vision</div>
+          <div class="partner-text">To become the leading and preferred export with quality, service, and values as the highest priorities — satisfying the needs of customers, employees, and stakeholders.</div>
+          <div class="partner-section-title" style="margin-top:24px;">From Farm to Market — Seamlessly</div>
+          <div class="partner-text">La Granja supplies Sun Gate with fresh, high-quality crops grown on our farms. Sun Gate then processes, packages, and distributes these products across local and global markets. Together, we ensure a seamless supply chain from farm to final product.</div>
+        </div>
+      </div>
+      <div class="partner-card reveal reveal-delay-2">
+        <div class="partner-header">
+          <div class="partner-logo-text">🏗️ EL <span>FATH</span></div>
+        </div>
+        <div class="partner-body">
+          <div class="partner-section-title">About El Fath</div>
+          <div class="partner-text">La Granja is also proud to partner with El Fath Construction Company, one of Egypt's leading companies in the construction industry. Founded in 2008, El Fath has been a prominent player for over a decade with a strong foundation in both public and private sector projects.</div>
+          <div class="partner-section-title" style="margin-top:24px;">Track Record of Excellence</div>
+          <div class="partner-text">El Fath has worked on several significant state projects, including the high-speed train project in Suez, as well as numerous other government initiatives. The company's commitment to excellence, along with its experience and expertise, makes it a trusted partner in the construction sector.</div>
+          <div class="partner-section-title" style="margin-top:24px;">Building the Future Together</div>
+          <div class="partner-text">El Fath's construction expertise ensures that every La Granja development meets the highest standards of quality, durability, and architectural integrity — turning vision into reality, one compound at a time.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-grid">
+      <div>
+        <div class="reveal">
+          <div class="section-tag">Get In Touch</div>
+          <h2 class="section-title">Contact <strong>Us</strong></h2>
+          <div class="section-line"></div>
+          <p style="margin-top:20px;font-size:16px;color:var(--text-mid);line-height:1.7;">Ready to begin your journey with La Granja? Reach out to our team and let us guide you toward your ideal agricultural lifestyle.</p>
+        </div>
+        <div style="margin-top:48px;">
+          <div class="contact-item reveal reveal-delay-1">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.9 19.79 19.79 0 0 1 1.62 3.29 2 2 0 0 1 3.59 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.54a16 16 0 0 0 6.06 6.06l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Phone</div>
+              <div class="contact-item-value"><a href="tel:01145006672">01145006672</a></div>
+            </div>
+          </div>
+          <div class="contact-item reveal reveal-delay-2">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Website</div>
+              <div class="contact-item-value"><a href="https://www.lagranjaeg.com" target="_blank">www.lagranjaeg.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item reveal reveal-delay-3">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-value"><a href="mailto:info@lagranjaeg.com">info@lagranjaeg.com</a></div>
+            </div>
+          </div>
+          <div class="contact-item reveal reveal-delay-4">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Address</div>
+              <div class="contact-item-value">Kilometer 64, Western Asyut Road — 40 km after the Shooting Range Square</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form-wrap reveal reveal-delay-2">
+        <div class="form-title">Send a Message</div>
+        <div class="form-subtitle">Our team will get back to you within 24 hours.</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" placeholder="Ahmed">
+          </div>
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" placeholder="Mohamed">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" placeholder="+20 xxx xxx xxxx">
+        </div>
+        <div class="form-group">
+          <label>Project of Interest</label>
+          <select>
+            <option>Select a project...</option>
+            <option>Rayan West</option>
+            <option>Rayan Hills (Coming Soon)</option>
+            <option>Ghernata (Coming Soon)</option>
+            <option>General Inquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message</label>
+          <textarea placeholder="Tell us about your interest in La Granja..."></textarea>
+        </div>
+        <button class="form-submit">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand-name">LA <span>GRANJA</span></div>
+        <div class="footer-tagline">Your Life In The Heart Of Nature</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;max-width:280px;">
+          Creating agricultural communities that reunite people with the land — where modern living and sustainable farming exist in perfect harmony.
+        </div>
+        <div style="margin-top:20px;display:flex;gap:12px;">
+          <a href="https://www.lagranjaeg.com" target="_blank" style="width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);text-decoration:none;transition:background 0.3s;font-size:14px;" onmouseover="this.style.background='rgba(74,124,63,0.5)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">🌐</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <ul>
+          <li><a href="#about">About La Granja</a></li>
+          <li><a href="#management">Management Team</a></li>
+          <li><a href="#vision-mission">Vision & Mission</a></li>
+          <li><a href="#values">Core Values</a></li>
+          <li><a href="#story">Our Story</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Projects</div>
+        <ul>
+          <li><a href="#projects">Rayan West</a></li>
+          <li><a href="#projects">Rayan Hills</a></li>
+          <li><a href="#projects">Ghernata</a></li>
+          <li><a href="#investment">Investment Vision</a></li>
+          <li><a href="#egypt">Egypt's Future</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <ul>
+          <li><a href="tel:01145006672">01145006672</a></li>
+          <li><a href="mailto:info@lagranjaeg.com">info@lagranjaeg.com</a></li>
+          <li><a href="https://www.lagranjaeg.com" target="_blank">lagranjaeg.com</a></li>
+          <li style="color:rgba(255,255,255,0.3);font-size:13px;line-height:1.5;">Km 64, Western Asyut Road</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 La Granja Development. All rights reserved.</div>
+      <div><a href="https://www.lagranjaeg.com" target="_blank">lagranjaeg.com</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+  });
+
+  // Intersection Observer for reveal animations
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Project tabs
+  function switchTab(tabId, btn) {
+    document.querySelectorAll('.project-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.project-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Form submit handler
+  document.querySelector('.form-submit').addEventListener('click', function(e) {
+    e.preventDefault();
+    this.textContent = '✓ Message Sent!';
+    this.style.background = 'var(--green-light)';
+    setTimeout(() => {
+      this.textContent = 'Send Message';
+      this.style.background = '';
+    }, 3000);
+  });
+
+  // Smooth hover on choosing items
+  document.querySelectorAll('.choosing-item').forEach(item => {
+    item.addEventListener('mouseenter', function() {
+      this.style.background = 'white';
+      this.style.boxShadow = '0 4px 20px rgba(0,0,0,0.06)';
+    });
+    item.addEventListener('mouseleave', function() {
+      this.style.background = '';
+      this.style.boxShadow = '';
+    });
+  });
+</script>
+</body>
+</html>

@@ -1704,53 +1704,6 @@
     btn.classList.add('active');
   }
 
-  // Formspree AJAX submit — sends to ayanawar4@gmail.com
-  const contactForm = document.getElementById('contact-form');
-  const submitBtn = document.getElementById('submit-btn');
-  const formStatus = document.getElementById('form-status');
-
-  contactForm.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    submitBtn.textContent = 'Sending...';
-    submitBtn.disabled = true;
-
-    const data = new FormData(contactForm);
-
-    try {
-      const response = await fetch(contactForm.action, {
-        method: 'POST',
-        body: data,
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (response.ok) {
-        formStatus.style.display = 'block';
-        formStatus.style.background = 'rgba(74,124,63,0.1)';
-        formStatus.style.color = 'var(--green)';
-        formStatus.style.border = '1px solid var(--green)';
-        formStatus.textContent = '✓ Message sent successfully! We will get back to you within 24 hours.';
-        contactForm.reset();
-        submitBtn.textContent = '✓ Sent!';
-        setTimeout(() => {
-          submitBtn.textContent = 'Send Message';
-          submitBtn.disabled = false;
-          formStatus.style.display = 'none';
-        }, 5000);
-      } else {
-        const json = await response.json();
-        throw new Error(json.errors ? json.errors.map(e => e.message).join(', ') : 'Submission failed');
-      }
-    } catch (err) {
-      formStatus.style.display = 'block';
-      formStatus.style.background = 'rgba(200,89,58,0.1)';
-      formStatus.style.color = 'var(--terracotta)';
-      formStatus.style.border = '1px solid var(--terracotta)';
-      formStatus.textContent = '⚠ Could not send message. Please email us directly at info@lagranjaeg.com';
-      submitBtn.textContent = 'Send Message';
-      submitBtn.disabled = false;
-    }
-  });
-
   // Smooth hover on choosing items
   document.querySelectorAll('.choosing-item').forEach(item => {
     item.addEventListener('mouseenter', function() {

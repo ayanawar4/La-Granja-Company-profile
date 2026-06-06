@@ -861,24 +861,29 @@
   /* ─── ARABIC / RTL SUPPORT ─── */
   @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap');
 
-  /* Language toggle button */
+  /* Language toggle - always visible floating pill */
   #lang-toggle {
-    background: var(--green);
-    color: white; border: none;
-    padding: 9px 20px; border-radius: 4px;
+    background: rgba(255,255,255,0.15);
+    color: white; border: 1.5px solid rgba(255,255,255,0.4);
+    padding: 8px 18px; border-radius: 100px;
     font-size: 13px; font-weight: 700;
     cursor: pointer; letter-spacing: 0.5px;
     transition: all 0.3s;
     display: flex; align-items: center; gap: 8px;
     font-family: 'Outfit', 'Cairo', sans-serif;
-    white-space: nowrap;
-    flex-shrink: 0;
+    white-space: nowrap; flex-shrink: 0;
+    backdrop-filter: blur(8px);
   }
   #lang-toggle:hover {
-    background: var(--green-light);
+    background: var(--green);
+    border-color: var(--green);
     transform: translateY(-1px);
   }
-  #lang-toggle .lang-flag { font-size: 16px; }
+  nav.scrolled #lang-toggle {
+    background: var(--green);
+    border-color: var(--green);
+  }
+  #lang-toggle .lang-flag { font-size: 15px; }
 
   /* RTL mode */
   html[dir="rtl"] {
@@ -954,8 +959,8 @@
 
 <!-- NAV -->
 
-<button id="lang-toggle" onclick="toggleLang()" title="Switch Language">
-  <span class="lang-flag">🌐</span>
+<button id="lang-toggle" onclick="toggleLang()" title="Switch to Arabic / English">
+  <span class="lang-flag" id="lang-flag">🇸🇦</span>
   <span id="lang-label">العربية</span>
 </button>
 
@@ -2009,8 +2014,10 @@ function applyTranslations(lang) {
   // Update font for body
   document.body.style.fontFamily = isAr ? "'Cairo', sans-serif" : "'Outfit', sans-serif";
 
-  // Toggle button label
+  // Toggle button label + flag
+  const isAr = lang === 'ar';
   document.getElementById('lang-label').textContent = isAr ? 'English' : 'العربية';
+  document.getElementById('lang-flag').textContent  = isAr ? '🇬🇧' : '🇸🇦';
 
   // Fix navbar: move lang toggle INSIDE nav to prevent overlap
   const nav = document.getElementById('navbar');

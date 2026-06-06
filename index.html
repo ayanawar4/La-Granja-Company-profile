@@ -958,12 +958,6 @@
 <body>
 
 <!-- NAV -->
-
-<button id="lang-toggle" onclick="toggleLang()" title="Switch to Arabic / English">
-  <span class="lang-flag" id="lang-flag">🇸🇦</span>
-  <span id="lang-label">العربية</span>
-</button>
-
 <nav id="navbar">
   <a href="#hero" class="nav-logo">
     <div class="nav-logo-mark">G</div>
@@ -976,6 +970,10 @@
     <a href="#egypt" data-key="nav-egypt">Egypt</a>
     <a href="#partners" class="nav-cta" data-key="nav-partners">Our Partners</a>
   </div>
+  <button id="lang-toggle" onclick="toggleLang()" title="Switch to Arabic / English">
+    <span class="lang-flag" id="lang-flag">🇸🇦</span>
+    <span id="lang-label">العربية</span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -2006,33 +2004,18 @@ function applyTranslations(lang) {
     }
   });
 
-  // HTML dir + lang
   const isAr = lang === 'ar';
+
+  // HTML dir + lang
   document.documentElement.setAttribute('dir', isAr ? 'rtl' : 'ltr');
   document.documentElement.setAttribute('lang', isAr ? 'ar' : 'en');
 
-  // Update font for body
+  // Font
   document.body.style.fontFamily = isAr ? "'Cairo', sans-serif" : "'Outfit', sans-serif";
 
   // Toggle button label + flag
-  const isAr = lang === 'ar';
   document.getElementById('lang-label').textContent = isAr ? 'English' : 'العربية';
   document.getElementById('lang-flag').textContent  = isAr ? '🇬🇧' : '🇸🇦';
-
-  // Fix navbar: move lang toggle INSIDE nav to prevent overlap
-  const nav = document.getElementById('navbar');
-  const toggle = document.getElementById('lang-toggle');
-  if (isAr) {
-    // RTL: toggle goes to far left, nav items right-to-left
-    toggle.style.position = 'relative';
-    toggle.style.top = 'auto';
-    toggle.style.left = 'auto';
-    toggle.style.right = 'auto';
-    nav.style.justifyContent = 'space-between';
-  } else {
-    toggle.style.position = 'relative';
-    nav.style.justifyContent = 'space-between';
-  }
 }
 
 function toggleLang() {
@@ -2040,18 +2023,8 @@ function toggleLang() {
   applyTranslations(currentLang);
 }
 
-// On DOM ready: move lang toggle INTO the navbar so it never overlaps content
+// On DOM ready: apply default language
 document.addEventListener('DOMContentLoaded', function() {
-  const nav = document.getElementById('navbar');
-  const toggle = document.getElementById('lang-toggle');
-  // Remove fixed positioning, put inside nav
-  toggle.style.position = 'relative';
-  toggle.style.top = 'auto';
-  toggle.style.right = 'auto';
-  toggle.style.left = 'auto';
-  toggle.style.boxShadow = 'none';
-  // Insert into nav before nav-links
-  nav.appendChild(toggle);
   applyTranslations('en');
 });
 </script>

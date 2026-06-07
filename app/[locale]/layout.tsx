@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, getLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
@@ -8,8 +8,8 @@ export const dynamic = 'force-dynamic';
 const locales = ['en', 'ar'];
 
 export const metadata: Metadata = {
-  title: 'La Granja Development – Your Life In The Heart Of Nature',
-  description: 'Agricultural compounds that merge modern homes with fertile farmland.',
+  title: 'La Granja Development',
+  description: 'Your Life In The Heart Of Nature',
 };
 
 export default async function LocaleLayout({

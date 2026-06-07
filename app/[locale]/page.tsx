@@ -16,8 +16,6 @@ import Sustainability from '@/components/Sustainability';
 import Partners from '@/components/Partners';
 import Footer from '@/components/Footer';
 
-export const dynamic = 'force-static';
-
 export function generateStaticParams() {
   return [{ locale: 'en' }, { locale: 'ar' }];
 }

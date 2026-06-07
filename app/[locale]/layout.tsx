@@ -1,16 +1,24 @@
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, getLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-const locales = ['en', 'ar'];
+const locales = ['en', 'ar'] as const;
+type Locale = typeof locales[number];
 
 export const metadata: Metadata = {
   title: 'La Granja Development',
   description: 'Your Life In The Heart Of Nature',
 };
+
+async function getMessages(locale: string) {
+  try {
+    return (await import(`../../messages/${locale}.json`)).default;
+  } catch {
+    notFound();
+  }
+}
 
 export default async function LocaleLayout({
   children,
@@ -20,9 +28,9 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  if (!locales.includes(locale)) notFound();
+  if (!locales.includes(locale as Locale)) notFound();
 
-  const messages = await getMessages();
+  const messages = await getMessages(locale);
   const isAr = locale === 'ar';
 
   return (
@@ -35,8 +43,8 @@ export default async function LocaleLayout({
           rel="stylesheet"
         />
       </head>
-      <body style={{ fontFamily: isAr ? "'Cairo', sans-serif" : "'Outfit', sans-serif" }}>
-        <NextIntlClientProvider messages={messages}>
+      <body style={{ fontFamily: isAr ? "\'Cairo\', sans-serif" : "\'Outfit\', sans-serif" }}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>
       </body>

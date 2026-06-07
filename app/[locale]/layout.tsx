@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import '../globals.css';
+
+export const dynamic = 'force-dynamic';
 
 const locales = ['en', 'ar'];
 
@@ -20,6 +21,7 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
   if (!locales.includes(locale)) notFound();
+
   const messages = await getMessages();
   const isAr = locale === 'ar';
 

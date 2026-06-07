@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import StatsBar from '@/components/StatsBar';
@@ -15,10 +17,6 @@ import Choosing from '@/components/Choosing';
 import Sustainability from '@/components/Sustainability';
 import Partners from '@/components/Partners';
 import Footer from '@/components/Footer';
-
-export function generateStaticParams() {
-  return [{ locale: 'en' }, { locale: 'ar' }];
-}
 
 export default function HomePage() {
   return (

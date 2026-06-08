@@ -332,56 +332,56 @@ function About() {
     <section id="about" className="sp animated-bg" style={{position:'relative'}}>
       <Particles/>
       <div className="si" style={{position:'relative',zIndex:2}}>
-        <div className="g2">
+        {/* 3-col on large: img1 | img2-stack | text  /  1-col on mobile */}
+        <div className="about-row">
+          {/* col 1 — main aerial */}
           <Reveal>
-            <div style={{position:'relative',paddingBottom:24}}>
-              <motion.div whileHover={{scale:1.02}}
-                style={{position:'relative',borderRadius:20,overflow:'hidden',aspectRatio:'4/5',
-                  boxShadow:`0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px ${G.border}`}}>
-                <Image src="/img-aerial.jpg" alt="La Granja" fill
-                  style={{objectFit:'cover',objectPosition:'center'}}/>
-                <div style={{position:'absolute',inset:0,
-                  background:'linear-gradient(to top,rgba(6,13,6,0.7) 0%,transparent 50%)'}}/>
-              </motion.div>
-              {/* accent img */}
-              <motion.div whileHover={{scale:1.04}} className="hide-lg"
-                style={{position:'absolute',bottom:-24,right:-20,width:'48%',aspectRatio:'1',
-                  borderRadius:16,overflow:'hidden',
-                  border:`3px solid rgba(74,180,63,0.5)`,
-                  boxShadow:`0 16px 48px rgba(0,0,0,0.5), 0 0 20px ${G.glow}`}}>
+            <motion.div whileHover={{scale:1.015}}
+              style={{position:'relative',borderRadius:16,overflow:'hidden',height:360,
+                boxShadow:`0 24px 60px rgba(0,0,0,0.6),0 0 0 1px ${G.border}`}}>
+              <Image src="/img-aerial.jpg" alt="La Granja aerial" fill
+                style={{objectFit:'cover',objectPosition:'center'}}/>
+              <div style={{position:'absolute',inset:0,
+                background:'linear-gradient(to top,rgba(6,13,6,0.6) 0%,transparent 55%)'}}/>
+            </motion.div>
+          </Reveal>
+
+          {/* col 2 — two stacked images */}
+          <Reveal delay={0.1}>
+            <div style={{display:'flex',flexDirection:'column',gap:12,height:360}}>
+              <motion.div whileHover={{scale:1.015}} style={{position:'relative',
+                borderRadius:14,overflow:'hidden',flex:'1 1 0',
+                boxShadow:`0 12px 32px rgba(0,0,0,0.5),0 0 0 1px ${G.border}`}}>
                 <Image src="/img-pergola.jpg" alt="Pool" fill style={{objectFit:'cover'}}/>
               </motion.div>
-              {/* badge */}
-              <div className="hide-lg" style={{position:'absolute',top:28,left:-16,
-                padding:'20px 22px',borderRadius:12,
-                background:'linear-gradient(135deg,#0d2a0d,#153a15)',
-                border:`1px solid ${G.border}`,
-                boxShadow:`0 8px 32px rgba(0,0,0,0.5), 0 0 20px ${G.glow}`}}>
-                <div className="sn" style={{fontSize:44,fontWeight:700,lineHeight:1}}>3</div>
-                <div style={{fontSize:11,color:G.muted,marginTop:4,letterSpacing:1}}>{t('badge')}</div>
-              </div>
+              <motion.div whileHover={{scale:1.015}} style={{position:'relative',
+                borderRadius:14,overflow:'hidden',height:130,
+                boxShadow:`0 12px 32px rgba(0,0,0,0.5),0 0 0 1px ${G.border}`}}>
+                <Image src="/img-villa-garden.jpg" alt="Garden" fill style={{objectFit:'cover'}}/>
+              </motion.div>
             </div>
           </Reveal>
 
+          {/* col 3 — text */}
           <div>
             <Reveal>
               <Label text={t('tag')} light/>
               <H2 title={t('title')} bold={t('bold')} light/>
-              <div style={{width:56,height:3,borderRadius:2,marginTop:20,marginBottom:32,
+              <div style={{width:56,height:3,borderRadius:2,marginTop:20,marginBottom:28,
                 background:`linear-gradient(to right,${G.green},${G.light})`}}/>
-              <p style={{fontSize:16,lineHeight:1.9,color:G.muted}}>{t('desc')}</p>
+              <p style={{fontSize:15,lineHeight:1.9,color:G.muted}}>{t('desc')}</p>
             </Reveal>
             <motion.ul variants={stagger} initial="hidden" whileInView="visible" viewport={{once:true}}
-              style={{listStyle:'none',marginTop:28,display:'flex',flexDirection:'column',gap:12}}>
+              style={{listStyle:'none',marginTop:22,display:'flex',flexDirection:'column',gap:10}}>
               {(['b1','b2','b3','b4'] as const).map((k,i)=>(
                 <motion.li key={i} variants={fadeUp}
-                  whileHover={{x:8,background:'rgba(74,180,63,0.12)'}}
+                  whileHover={{x:6,background:'rgba(74,180,63,0.12)'}}
                   transition={{duration:.2}}
-                  style={{display:'flex',gap:14,alignItems:'flex-start',padding:'14px 18px',
-                    borderRadius:10,borderLeft:`3px solid ${G.mid}`,
-                    background:'rgba(74,180,63,0.06)',
-                    border:`1px solid ${G.border}`,fontSize:14,color:G.text,lineHeight:1.75,cursor:'default'}}>
-                  <span style={{color:G.mid,marginTop:3,flexShrink:0,fontSize:14}}>🌿</span>
+                  style={{display:'flex',gap:12,alignItems:'flex-start',padding:'12px 15px',
+                    borderRadius:10,border:`1px solid ${G.border}`,
+                    background:'rgba(74,180,63,0.06)',fontSize:13,color:G.text,
+                    lineHeight:1.75,cursor:'default'}}>
+                  <span style={{color:G.mid,marginTop:2,flexShrink:0}}>🌿</span>
                   {t(k)}
                 </motion.li>
               ))}
@@ -389,6 +389,23 @@ function About() {
           </div>
         </div>
       </div>
+
+      <style>{`
+        .about-row {
+          display: grid;
+          grid-template-columns: 240px 160px 1fr;
+          gap: 28px;
+          align-items: start;
+        }
+        @media(max-width:1100px){
+          .about-row { grid-template-columns: 1fr 1fr; }
+          .about-row > div:nth-child(3) { grid-column: span 2; }
+        }
+        @media(max-width:640px){
+          .about-row { grid-template-columns: 1fr; }
+          .about-row > div:nth-child(3) { grid-column: span 1; }
+        }
+      `}</style>
     </section>
   );
 }
@@ -463,16 +480,16 @@ function Story() {
             </motion.div>
           </div>
           <Reveal delay={.2}>
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gridTemplateRows:'240px 200px',gap:12}}>
-              <div style={{gridColumn:'span 2',position:'relative',borderRadius:20,overflow:'hidden',
+            <div className="story-mosaic" style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:12}}>
+              <div style={{gridColumn:'span 2',position:'relative',borderRadius:20,overflow:'hidden',height:220,
                 boxShadow:`0 0 0 1px ${G.border},0 20px 60px rgba(0,0,0,0.5)`}}>
                 <Image src="/img-family-pool.jpg" alt="La Granja" fill style={{objectFit:'cover'}}/>
               </div>
-              <div style={{position:'relative',borderRadius:14,overflow:'hidden',
+              <div style={{position:'relative',borderRadius:14,overflow:'hidden',height:180,
                 boxShadow:`0 0 0 1px ${G.border}`}}>
                 <Image src="/img-villa-top.jpg" alt="Villa" fill style={{objectFit:'cover'}}/>
               </div>
-              <div style={{position:'relative',borderRadius:14,overflow:'hidden',
+              <div style={{position:'relative',borderRadius:14,overflow:'hidden',height:180,
                 boxShadow:`0 0 0 1px ${G.border}`}}>
                 <Image src="/img-villa-garden.jpg" alt="Garden" fill style={{objectFit:'cover'}}/>
               </div>
@@ -746,7 +763,7 @@ function Projects() {
         </div>
 
         {/* tabs */}
-        <Reveal style={{display:'flex',justifyContent:'center',margin:'44px 0',overflowX:'auto'}}>
+        <Reveal style={{display:'flex',justifyContent:'center',margin:'44px 0'}} className="tab-row">
           <div style={{display:'flex',gap:4,padding:'6px',borderRadius:100,
             background:'rgba(74,180,63,0.08)',border:`1px solid ${G.border}`,flexShrink:0}}>
             {tabs.map((label,i)=>(

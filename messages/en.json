@@ -1,17 +1,441 @@
 {
-  "nav": { "about":"About","values":"Values","projects":"Projects","egypt":"Egypt","partners":"Partners","management":"Leadership","langSwitch":"العربية" },
-  "hero": { "eyebrow":"Redefining Modern Living","title1":"LA","title2":"GRANJA","sub":"Your Life In The Heart Of Nature","desc":"Born from a bold vision — to transform the way we live by reuniting people with the land. Agricultural compounds that merge modern homes with fertile farmland.","btn1":"Explore Projects","btn2":"Our Story" },
-  "stats": { "s1":"Acres","s2":"Farms Available","s3":"Palm Trees / Farm","s4":"Years Sun Gate","s5":"El Fath Founded" },
-  "about": { "tag":"Who We Are","title":"About","bold":"La Granja","badge":"Projects Launched","desc":"La Granja is a development company redefining the way people live — creating agricultural compounds that unite modern homes with fertile farmland, offering families a healthier, more balanced life closer to nature.","b1":"Communities designed around a simple idea: a home that gives back — residents enjoy contemporary villas while benefiting from productive land that can generate income.","b2":"A lifestyle as sustainable as it is rewarding — every home surrounded by fertile farmland.","b3":"Lifestyle creators offering spaces where people live better today while building value for the future.","b4":"Agriculture, sustainability, and modern life together — just an hour from the city." },
-  "vm": { "tag":"Our Direction","title":"Vision","amp":"&","title2":"Mission","vlabel":"Our Vision","vtitle":"Inspiring a Lifestyle Movement","vtext":"To inspire a lifestyle movement where every home is more than just a shelter — it is a source of wellness, sustainability, and value. Vibrant communities surrounded by fertile soil, where every home offers comfort, every acre holds potential, and every investment grows.","mlabel":"Our Mission","mtitle":"Communities Rooted in Nature","mtext":"We create communities that reconnect people with nature, foster sustainable practices, and provide spaces where life and investment grow hand in hand. Our agricultural compounds allow families to live surrounded by nature — all while knowing their home and land remain valuable, long-term assets." },
-  "story": { "tag":"Our Journey","title":"Our","bold":"Story","p1":"It all started with a simple dream: to create a life where modern living meets nature, where comfort and sustainability go hand in hand.","p2":"The founders saw the need for a place that blends the peace of the countryside with the convenience of being close to the city.","p3":"They envisioned vibrant communities surrounded by fertile soil, where every home offers comfort, every acre holds potential, and every investment grows.","p4":"La Granja was born to turn this vision into reality — agriculture, sustainability, and modern life — just an hour away." },
-  "values": { "tag":"What We Stand For","title":"Our Core","bold":"Values","v":[{"title":"Community","text":"Life is richer when shared. Our developments foster strong connections between neighbors where families can grow together and create a culture of belonging."},{"title":"Integrity","text":"We are guided by honesty, transparency, and trust. Every project reflects our commitment to doing the right thing for our residents, partners, and environment."},{"title":"Sustainability","text":"We believe in living in harmony with the earth. Every La Granja community is designed with eco-friendly practices that protect natural resources."},{"title":"Prosperity","text":"We measure success not only by financial growth, but by the quality of life our communities bring — rewarding, meaningful, and naturally abundant."},{"title":"Wellness","text":"True wealth begins with well-being. Our compounds nurture healthier lifestyles from fresh air and natural produce to open spaces that promote balance."},{"title":"Innovation","text":"We embrace new ideas that blend technology, design, and agriculture to create smarter, more efficient communities connected to the land."}] },
-  "villa": { "tag":"Your Investment","l1":"Your Villa","l2":"Your Farm","l3":"Your Future","p1":"At La Granja, a home should be more than walls and a roof — a source of wellness, purpose, and prosperity. That belief gave birth to our concept: agricultural compounds that merge modern living with productive farmland.","p2":"Each development offers residents a contemporary villa designed for comfort and elegance, paired with fertile land that can be cultivated for fresh produce or managed for profit.","p3":"A lifestyle that is both rewarding and sustainable — where families enjoy the peace of nature, farm-to-table living, and the financial value of land ownership.","btn":"View Our Projects","f":[{"title":"Reconnect with Nature","text":"Without sacrificing modern conveniences — the best of both worlds in one community."},{"title":"Promote Healthier Living","text":"Through open spaces, fresh air, and access to natural produce grown on your own land."},{"title":"Encourage Sustainability","text":"Eco-friendly design combined with productive land for a future-proof lifestyle investment."},{"title":"Value Beyond Ownership","text":"A home that generates income and offers long-term stability — your land, your legacy."}] },
-  "management": { "tag":"Our Leadership","title":"Management","bold":"Structure","desc":"The visionary founders behind La Granja — united by expertise in construction and agriculture.","ahmed":{"name":"Ahmed Galal","role":"Co-Founder & Construction Lead","tags":["Architecture","Construction","Infrastructure"],"points":["Experienced architecture engineer and founder of El Fath Construction Company, established in 2008.","Pivotal role in the construction of the 2022 FIFA World Cup Stadiums in Qatar.","Actively involved in major state projects since 2008, including the high-speed train project in Suez.","His vision shaped La Granja's integration of modern infrastructure with sustainable living."]},"mohamed":{"name":"Mohamed Ragab","role":"Co-Founder & Agricultural Lead","tags":["Agriculture","Investment","Sustainability"],"points":["Agricultural developer and owner of Elite for Agricultural Development.","Working in agricultural investment and development since 2020.","Projects include El Alamein, New Valley, and the West Assiut project.","His expertise integrates modern living with fertile land for a sustainable future."]} },
-  "investment": { "tag":"Financial Strategy","title":"Investment","bold":"Vision","cards":[{"icon":"🌱","title":"Rooted in Growth & Balance","text":"La Granja redefines investment by merging financial prosperity with environmental integrity. Each element crafted for enduring value."},{"icon":"♻️","title":"Sustainable Profitability","text":"Eco-efficient infrastructure reduces operational costs and enhances long-term returns."},{"icon":"📈","title":"Nature-Driven ROI","text":"Every aspect of La Granja's environment contributes to its ecological desirability and market value."},{"icon":"📍","title":"Location & Growth","text":"Strategically positioned for expansion, offering both convenience and exclusivity."},{"icon":"🏛️","title":"Legacy Investment","text":"More than an investment — a statement of enduring purpose and timeless prestige."},{"icon":"🤝","title":"Lifestyle as Wealth","text":"The greatest return comes from the life you live — measured in health, balance, and well-being."}] },
-  "projects": { "tag":"Our Developments","title":"Our","bold":"Projects","desc":"Three distinctive projects, one unwavering vision — communities where modern living and sustainable agriculture exist side by side.","tabs":["01 — Rayan West","02 — Rayan Hills","03 — Ghernata"],"rw":{"label":"Project 01","tagline":"Create Your Farm — Fayoum Asyut Road","desc":"Rayan West is not just another agricultural project — it stands out as a one-of-a-kind investment that goes beyond a simple villa or piece of land.","stats":[{"num":"100","label":"Total Acres"},{"num":"94","label":"Available Farms"},{"num":"30","label":"Barhi Palm Trees"},{"num":"1h","label":"From Cairo"}],"features":[{"title":"Modern Living Meets Productive Farmland","text":"A complete lifestyle experience combining contemporary residential comfort with fertile farmland, ensuring steady income."},{"title":"Prime Location","text":"Situated along the Fayoum Asyut Road, only an hour from Cairo — perfect balance of tranquility and city access."},{"title":"Architectural Elegance","text":"Andalusian-inspired villas with natural ventilation domes ensuring cool, fresh interiors throughout the year."},{"title":"Each Farm Includes","text":"Productive greenhouses · 30 Barhi palm trees · Land ready for intercropping."}]},"rh":{"label":"Project 02","title":"Rayan Hills","sub":"A new horizon for life & investment","text":"Rayan Hills will embrace the same philosophy that defines La Granja — combining elegant modern villas, fertile land, and a lifestyle rooted in nature.","badge":"Coming Soon"},"gh":{"label":"Project 03","title":"Ghernata","sub":"A new horizon for life & investment","text":"Ghernata will carry forward the La Granja vision — sophisticated architecture, productive agricultural land, and a community lifestyle that is both rewarding and sustainable.","badge":"Coming Soon"} },
-  "egypt": { "tag":"National Context","title":"Egypt's Agricultural","bold":"Future","intro":"Egypt is shaping a new agricultural era — and La Granja is at the heart of it.","c1title":"Egypt's Agricultural Ambitions","p1":"Egypt is investing heavily in agriculture to secure food supply and boost exports. The FY 2025/2026 plan allocates EGP 17.5 billion to modernize farming.","p2":"The strategy includes reclaiming land to reach 12 million feddans by 2030, using smart irrigation, high-yield crops, and major reclamation projects.","p3":"Egypt's Vision 2030 emphasizes technology-driven sustainable farming through AI, modern irrigation, and climate-adaptive practices.","c2title":"La Granja: Investing in Egypt's Agricultural Tomorrow","p4":"As Egypt embraces a modern, sustainable agricultural future, La Granja stands at the forefront — combining contemporary living with productive farmland.","p5":"Just outside Cairo, La Granja offers rural tranquility with city accessibility, while certified green contracts ensure secure, long-term investment.","stats":[{"num":"17.5B","label":"EGP Agricultural Budget"},{"num":"12M","label":"Feddans Target 2030"}] },
-  "sustainability": { "tag":"Our Commitment","title":"Sustainability as a","bold":"Way of Life","p1":"At La Granja, sustainability is not an option — it is the foundation of how we live and build. Caring for the environment and caring for ourselves are one and the same.","p2":"From eco-friendly infrastructure to fertile land that produces natural food, sustainability is woven into daily life. Residents breathe cleaner air, eat fresher produce, and enjoy spaces designed to promote well-being.","features":[{"icon":"🌿","title":"Eco-Friendly Infrastructure","text":"Every structure built with green principles, minimizing environmental impact."},{"icon":"🌾","title":"Productive Farmland","text":"Fertile land producing natural, fresh food and connecting residents to the earth."},{"icon":"💧","title":"Smart Irrigation","text":"Modern water management systems that conserve resources and optimize productivity."},{"icon":"🌳","title":"Green Communities","text":"Designed to help families live closer to nature and conserve resources for future generations."}] },
-  "partners": { "tag":"Strategic Alliances","title":"Our","bold":"Partners","desc":"La Granja is proud to work alongside Egypt's leading organizations in agriculture and construction.","sg":{"name":"SUN GATE","sections":[{"title":"About Sun Gate","text":"La Granja partners with Sun Gate, one of Egypt's leading names in food production, trading, and export. With over 17 years of expertise, Sun Gate delivers premium food products to local and international markets."},{"title":"Sun Gate's Vision","text":"To become the leading and preferred export company with quality, service, and values as the highest priorities."},{"title":"From Farm to Market","text":"La Granja supplies Sun Gate with fresh, high-quality crops. Sun Gate processes and distributes across local and global markets — a seamless farm-to-product supply chain."}]},"ef":{"name":"EL FATH","sections":[{"title":"About El Fath","text":"La Granja partners with El Fath Construction Company, one of Egypt's leading construction companies. Founded in 2008, El Fath has been a prominent player for over a decade."},{"title":"Track Record of Excellence","text":"El Fath has worked on significant state projects including the high-speed train project in Suez and numerous government initiatives."},{"title":"Building the Future Together","text":"El Fath's construction expertise ensures every La Granja development meets the highest standards of quality, durability, and architectural integrity."}]} },
-  "footer": { "tagline":"Your Life In The Heart Of Nature","about":"Creating agricultural communities that reunite people with the land — where modern living and sustainable farming exist in perfect harmony.","cols":[{"title":"Company","links":[{"label":"About La Granja","href":"#about"},{"label":"Leadership Team","href":"#management"},{"label":"Vision & Mission","href":"#vision"},{"label":"Core Values","href":"#values"},{"label":"Our Story","href":"#story"}]},{"title":"Projects","links":[{"label":"Rayan West","href":"#projects"},{"label":"Rayan Hills","href":"#projects"},{"label":"Ghernata","href":"#projects"},{"label":"Investment Vision","href":"#investment"},{"label":"Egypt's Future","href":"#egypt"}]},{"title":"Contact","links":[{"label":"01145006672","href":"tel:01145006672"},{"label":"info@lagranjaeg.com","href":"mailto:info@lagranjaeg.com"},{"label":"lagranjaeg.com","href":"https://lagranjaeg.com"},{"label":"Km 64, Western Asyut Road","href":"#"}]}],"copy":"© 2026 La Granja Development. All rights reserved." }
+  "nav": {
+    "about": "About",
+    "values": "Values",
+    "projects": "Projects",
+    "egypt": "Egypt",
+    "partners": "Partners",
+    "management": "Leadership",
+    "langSwitch": "العربية"
+  },
+  "hero": {
+    "eyebrow": "Redefining Modern Living",
+    "title1": "LA",
+    "title2": "GRANJA",
+    "sub": "Your Life In The Heart Of Nature",
+    "desc": "Born from a bold vision — to transform the way we live by reuniting people with the land. Agricultural compounds that merge modern homes with fertile farmland.",
+    "btn1": "Explore Projects",
+    "btn2": "Our Story"
+  },
+  "stats": {
+    "s1": "Acres",
+    "s2": "Farms Available",
+    "s3": "Palm Trees / Farm",
+    "s4": "Years Sun Gate",
+    "s5": "El Fath Founded"
+  },
+  "about": {
+    "tag": "Who We Are",
+    "title": "About",
+    "bold": "La Granja",
+    "badge": "Projects Launched",
+    "desc": "La Granja is a development company redefining the way people live — creating agricultural compounds that unite modern homes with fertile farmland, offering families a healthier, more balanced life closer to nature.",
+    "b1": "Communities designed around a simple idea: a home that gives back — residents enjoy contemporary villas while benefiting from productive land that can generate income.",
+    "b2": "A lifestyle as sustainable as it is rewarding — every home surrounded by fertile farmland.",
+    "b3": "Lifestyle creators offering spaces where people live better today while building value for the future.",
+    "b4": "Agriculture, sustainability, and modern life together — just an hour from the city."
+  },
+  "vm": {
+    "tag": "Our Direction",
+    "title": "Vision",
+    "amp": "&",
+    "title2": "Mission",
+    "vlabel": "Our Vision",
+    "vtitle": "Inspiring a Lifestyle Movement",
+    "vtext": "To inspire a lifestyle movement where every home is more than just a shelter — it is a source of wellness, sustainability, and value. Vibrant communities surrounded by fertile soil, where every home offers comfort, every acre holds potential, and every investment grows.",
+    "mlabel": "Our Mission",
+    "mtitle": "Communities Rooted in Nature",
+    "mtext": "We create communities that reconnect people with nature, foster sustainable practices, and provide spaces where life and investment grow hand in hand. Our agricultural compounds allow families to live surrounded by nature — all while knowing their home and land remain valuable, long-term assets."
+  },
+  "story": {
+    "tag": "Our Journey",
+    "title": "Our",
+    "bold": "Story",
+    "p1": "It all started with a simple dream: to create a life where modern living meets nature, where comfort and sustainability go hand in hand.",
+    "p2": "The founders saw the need for a place that blends the peace of the countryside with the convenience of being close to the city.",
+    "p3": "They envisioned vibrant communities surrounded by fertile soil, where every home offers comfort, every acre holds potential, and every investment grows.",
+    "p4": "La Granja was born to turn this vision into reality — agriculture, sustainability, and modern life — just an hour away."
+  },
+  "values": {
+    "tag": "What We Stand For",
+    "title": "Our Core",
+    "bold": "Values",
+    "v": [
+      {
+        "title": "Community",
+        "text": "Life is richer when shared. Our developments foster strong connections between neighbors where families can grow together and create a culture of belonging."
+      },
+      {
+        "title": "Integrity",
+        "text": "We are guided by honesty, transparency, and trust. Every project reflects our commitment to doing the right thing for our residents, partners, and environment."
+      },
+      {
+        "title": "Sustainability",
+        "text": "We believe in living in harmony with the earth. Every La Granja community is designed with eco-friendly practices that protect natural resources."
+      },
+      {
+        "title": "Prosperity",
+        "text": "We measure success not only by financial growth, but by the quality of life our communities bring — rewarding, meaningful, and naturally abundant."
+      },
+      {
+        "title": "Wellness",
+        "text": "True wealth begins with well-being. Our compounds nurture healthier lifestyles from fresh air and natural produce to open spaces that promote balance."
+      },
+      {
+        "title": "Innovation",
+        "text": "We embrace new ideas that blend technology, design, and agriculture to create smarter, more efficient communities connected to the land."
+      }
+    ]
+  },
+  "villa": {
+    "tag": "Your Investment",
+    "l1": "Your Villa",
+    "l2": "Your Farm",
+    "l3": "Your Future",
+    "p1": "At La Granja, a home should be more than walls and a roof — a source of wellness, purpose, and prosperity. That belief gave birth to our concept: agricultural compounds that merge modern living with productive farmland.",
+    "p2": "Each development offers residents a contemporary villa designed for comfort and elegance, paired with fertile land that can be cultivated for fresh produce or managed for profit.",
+    "p3": "A lifestyle that is both rewarding and sustainable — where families enjoy the peace of nature, farm-to-table living, and the financial value of land ownership.",
+    "btn": "View Our Projects",
+    "f": [
+      {
+        "title": "Reconnect with Nature",
+        "text": "Without sacrificing modern conveniences — the best of both worlds in one community."
+      },
+      {
+        "title": "Promote Healthier Living",
+        "text": "Through open spaces, fresh air, and access to natural produce grown on your own land."
+      },
+      {
+        "title": "Encourage Sustainability",
+        "text": "Eco-friendly design combined with productive land for a future-proof lifestyle investment."
+      },
+      {
+        "title": "Value Beyond Ownership",
+        "text": "A home that generates income and offers long-term stability — your land, your legacy."
+      }
+    ]
+  },
+  "management": {
+    "tag": "Our Leadership",
+    "title": "Management",
+    "bold": "Structure",
+    "desc": "The visionary founders behind La Granja — united by expertise in construction and agriculture.",
+    "ahmed": {
+      "name": "Ahmed Galal",
+      "role": "Co-Founder & Construction Lead",
+      "tags": [
+        "Architecture",
+        "Construction",
+        "Infrastructure"
+      ],
+      "points": [
+        "Experienced architecture engineer and founder of El Fath Construction Company, established in 2008.",
+        "Pivotal role in the construction of the 2022 FIFA World Cup Stadiums in Qatar.",
+        "Actively involved in major state projects since 2008, including the high-speed train project in Suez.",
+        "His vision shaped La Granja's integration of modern infrastructure with sustainable living."
+      ]
+    },
+    "mohamed": {
+      "name": "Mohamed Ragab",
+      "role": "Co-Founder & Agricultural Lead",
+      "tags": [
+        "Agriculture",
+        "Investment",
+        "Sustainability"
+      ],
+      "points": [
+        "Agricultural developer and owner of Elite for Agricultural Development.",
+        "Working in agricultural investment and development since 2020.",
+        "Projects include El Alamein, New Valley, and the West Assiut project.",
+        "His expertise integrates modern living with fertile land for a sustainable future."
+      ]
+    }
+  },
+  "investment": {
+    "tag": "Financial Strategy",
+    "title": "Investment",
+    "bold": "Vision",
+    "cards": [
+      {
+        "icon": "🌱",
+        "title": "Rooted in Growth & Balance",
+        "text": "La Granja redefines investment by merging financial prosperity with environmental integrity. Each element crafted for enduring value."
+      },
+      {
+        "icon": "♻️",
+        "title": "Sustainable Profitability",
+        "text": "Eco-efficient infrastructure reduces operational costs and enhances long-term returns."
+      },
+      {
+        "icon": "📈",
+        "title": "Nature-Driven ROI",
+        "text": "Every aspect of La Granja's environment contributes to its ecological desirability and market value."
+      },
+      {
+        "icon": "📍",
+        "title": "Location & Growth",
+        "text": "Strategically positioned for expansion, offering both convenience and exclusivity."
+      },
+      {
+        "icon": "🏛️",
+        "title": "Legacy Investment",
+        "text": "More than an investment — a statement of enduring purpose and timeless prestige."
+      },
+      {
+        "icon": "🤝",
+        "title": "Lifestyle as Wealth",
+        "text": "The greatest return comes from the life you live — measured in health, balance, and well-being."
+      }
+    ]
+  },
+  "projects": {
+    "tag": "Our Developments",
+    "title": "Our",
+    "bold": "Projects",
+    "desc": "Three distinctive projects, one unwavering vision — communities where modern living and sustainable agriculture exist side by side.",
+    "tabs": [
+      "01 — Rayan West",
+      "02 — Rayan Hills",
+      "03 — Ghernata"
+    ],
+    "rw": {
+      "label": "Project 01",
+      "tagline": "Create Your Farm — Fayoum Asyut Road",
+      "desc": "Rayan West is not just another agricultural project — it stands out as a one-of-a-kind investment that goes beyond a simple villa or piece of land.",
+      "stats": [
+        {
+          "num": "100",
+          "label": "Total Acres"
+        },
+        {
+          "num": "94",
+          "label": "Available Farms"
+        },
+        {
+          "num": "30",
+          "label": "Barhi Palm Trees"
+        },
+        {
+          "num": "1h",
+          "label": "From Cairo"
+        }
+      ],
+      "features": [
+        {
+          "title": "Modern Living Meets Productive Farmland",
+          "text": "A complete lifestyle experience combining contemporary residential comfort with fertile farmland, ensuring steady income."
+        },
+        {
+          "title": "Prime Location",
+          "text": "Situated along the Fayoum Asyut Road, only an hour from Cairo — perfect balance of tranquility and city access."
+        },
+        {
+          "title": "Architectural Elegance",
+          "text": "Andalusian-inspired villas with natural ventilation domes ensuring cool, fresh interiors throughout the year."
+        },
+        {
+          "title": "Each Farm Includes",
+          "text": "Productive greenhouses · 30 Barhi palm trees · Land ready for intercropping."
+        }
+      ]
+    },
+    "rh": {
+      "label": "Project 02",
+      "title": "Rayan Hills",
+      "sub": "A new horizon for life & investment",
+      "text": "Rayan Hills will embrace the same philosophy that defines La Granja — combining elegant modern villas, fertile land, and a lifestyle rooted in nature.",
+      "badge": "Coming Soon"
+    },
+    "gh": {
+      "label": "Project 03",
+      "title": "Ghernata",
+      "sub": "A new horizon for life & investment",
+      "text": "Ghernata will carry forward the La Granja vision — sophisticated architecture, productive agricultural land, and a community lifestyle that is both rewarding and sustainable.",
+      "badge": "Coming Soon"
+    }
+  },
+  "egypt": {
+    "tag": "National Context",
+    "title": "Egypt's Agricultural",
+    "bold": "Future",
+    "intro": "Egypt is shaping a new agricultural era — and La Granja is at the heart of it.",
+    "c1title": "Egypt's Agricultural Ambitions",
+    "p1": "Egypt is investing heavily in agriculture to secure food supply and boost exports. The FY 2025/2026 plan allocates EGP 17.5 billion to modernize farming.",
+    "p2": "The strategy includes reclaiming land to reach 12 million feddans by 2030, using smart irrigation, high-yield crops, and major reclamation projects.",
+    "p3": "Egypt's Vision 2030 emphasizes technology-driven sustainable farming through AI, modern irrigation, and climate-adaptive practices.",
+    "c2title": "La Granja: Investing in Egypt's Agricultural Tomorrow",
+    "p4": "As Egypt embraces a modern, sustainable agricultural future, La Granja stands at the forefront — combining contemporary living with productive farmland.",
+    "p5": "Just outside Cairo, La Granja offers rural tranquility with city accessibility, while certified green contracts ensure secure, long-term investment.",
+    "stats": [
+      {
+        "num": "17.5B",
+        "label": "EGP Agricultural Budget"
+      },
+      {
+        "num": "12M",
+        "label": "Feddans Target 2030"
+      }
+    ]
+  },
+  "sustainability": {
+    "tag": "Our Commitment",
+    "title": "Sustainability as a",
+    "bold": "Way of Life",
+    "p1": "At La Granja, sustainability is not an option — it is the foundation of how we live and build. Caring for the environment and caring for ourselves are one and the same.",
+    "p2": "From eco-friendly infrastructure to fertile land that produces natural food, sustainability is woven into daily life. Residents breathe cleaner air, eat fresher produce, and enjoy spaces designed to promote well-being.",
+    "features": [
+      {
+        "icon": "🌿",
+        "title": "Eco-Friendly Infrastructure",
+        "text": "Every structure built with green principles, minimizing environmental impact."
+      },
+      {
+        "icon": "🌾",
+        "title": "Productive Farmland",
+        "text": "Fertile land producing natural, fresh food and connecting residents to the earth."
+      },
+      {
+        "icon": "💧",
+        "title": "Smart Irrigation",
+        "text": "Modern water management systems that conserve resources and optimize productivity."
+      },
+      {
+        "icon": "🌳",
+        "title": "Green Communities",
+        "text": "Designed to help families live closer to nature and conserve resources for future generations."
+      }
+    ]
+  },
+  "partners": {
+    "tag": "Strategic Alliances",
+    "title": "Our",
+    "bold": "Partners",
+    "desc": "La Granja is proud to work alongside Egypt's leading organizations in agriculture and construction.",
+    "sg": {
+      "name": "SUN GATE",
+      "sections": [
+        {
+          "title": "About Sun Gate",
+          "text": "La Granja partners with Sun Gate, one of Egypt's leading names in food production, trading, and export. With over 17 years of expertise, Sun Gate delivers premium food products to local and international markets."
+        },
+        {
+          "title": "Sun Gate's Vision",
+          "text": "To become the leading and preferred export company with quality, service, and values as the highest priorities."
+        },
+        {
+          "title": "From Farm to Market",
+          "text": "La Granja supplies Sun Gate with fresh, high-quality crops. Sun Gate processes and distributes across local and global markets — a seamless farm-to-product supply chain."
+        }
+      ]
+    },
+    "ef": {
+      "name": "EL FATH",
+      "sections": [
+        {
+          "title": "About El Fath",
+          "text": "La Granja partners with El Fath Construction Company, one of Egypt's leading construction companies. Founded in 2008, El Fath has been a prominent player for over a decade."
+        },
+        {
+          "title": "Track Record of Excellence",
+          "text": "El Fath has worked on significant state projects including the high-speed train project in Suez and numerous government initiatives."
+        },
+        {
+          "title": "Building the Future Together",
+          "text": "El Fath's construction expertise ensures every La Granja development meets the highest standards of quality, durability, and architectural integrity."
+        }
+      ]
+    }
+  },
+  "footer": {
+    "tagline": "Your Life In The Heart Of Nature",
+    "about": "Creating agricultural communities that reunite people with the land — where modern living and sustainable farming exist in perfect harmony.",
+    "cols": [
+      {
+        "title": "Company",
+        "links": [
+          {
+            "label": "About La Granja",
+            "href": "#about"
+          },
+          {
+            "label": "Leadership Team",
+            "href": "#management"
+          },
+          {
+            "label": "Vision & Mission",
+            "href": "#vision"
+          },
+          {
+            "label": "Core Values",
+            "href": "#values"
+          },
+          {
+            "label": "Our Story",
+            "href": "#story"
+          }
+        ]
+      },
+      {
+        "title": "Projects",
+        "links": [
+          {
+            "label": "Rayan West",
+            "href": "#projects"
+          },
+          {
+            "label": "Rayan Hills",
+            "href": "#projects"
+          },
+          {
+            "label": "Ghernata",
+            "href": "#projects"
+          },
+          {
+            "label": "Investment Vision",
+            "href": "#investment"
+          },
+          {
+            "label": "Egypt's Future",
+            "href": "#egypt"
+          }
+        ]
+      },
+      {
+        "title": "Contact",
+        "links": [
+          {
+            "label": "01145006672",
+            "href": "tel:01145006672"
+          },
+          {
+            "label": "info@lagranjaeg.com",
+            "href": "mailto:info@lagranjaeg.com"
+          },
+          {
+            "label": "lagranjaeg.com",
+            "href": "https://lagranjaeg.com"
+          },
+          {
+            "label": "Km 64, Western Asyut Road",
+            "href": "#"
+          }
+        ]
+      }
+    ],
+    "copy": "© 2026 La Granja Development. All rights reserved."
+  },
+  "lifestyle": {
+    "tag": "Life at Rayan West",
+    "line1": "Where",
+    "line1b": "Investment",
+    "line2": "Meets",
+    "line2b": "Comfort",
+    "arabic": "حيث يلتقي الاستثمار بالراحة",
+    "btn": "Explore Rayan West"
+  },
+  "villa_banner": {
+    "subtitle": "Andalusian-Inspired Villas",
+    "enjoy": "Enjoy Life at Rayan West",
+    "enjoyAr": "استمتع بالحياة في ريان ويست"
+  }
 }

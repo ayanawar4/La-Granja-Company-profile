@@ -1083,7 +1083,7 @@ function Footer() {
                       textDecoration:'none',transition:'color .3s'}}
                       onMouseOver={e=>(e.currentTarget.style.color=G.light)}
                       onMouseOut={e=>(e.currentTarget.style.color='rgba(155,210,100,0.35)')}>
-                      {l.l??l.label}
+                      {l.label}
                     </a>
                   </li>
                 ))}

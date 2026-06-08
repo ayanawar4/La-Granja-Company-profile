@@ -4,21 +4,12 @@ import { notFound } from 'next/navigation';
 
 export const dynamic = 'force-dynamic';
 
-const locales = ['en', 'ar'] as const;
-type Locale = typeof locales[number];
-
 export const metadata: Metadata = {
-  title: 'La Granja Development',
-  description: 'Your Life In The Heart Of Nature',
+  title: 'La Granja Development — Your Life In The Heart Of Nature',
+  description: 'Agricultural compounds that merge modern homes with fertile farmland.',
 };
 
-async function getMessages(locale: string) {
-  try {
-    return (await import(`../../messages/${locale}.json`)).default;
-  } catch {
-    notFound();
-  }
-}
+const locales = ['en', 'ar'];
 
 export default async function LocaleLayout({
   children,
@@ -28,9 +19,8 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  if (!locales.includes(locale as Locale)) notFound();
-
-  const messages = await getMessages(locale);
+  if (!locales.includes(locale)) notFound();
+  const messages = (await import(`../../messages/${locale}.json`)).default;
   const isAr = locale === 'ar';
 
   return (
@@ -38,12 +28,9 @@ export default async function LocaleLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cairo:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap"
-          rel="stylesheet"
-        />
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cairo:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
       </head>
-      <body style={{ fontFamily: isAr ? "\'Cairo\', sans-serif" : "\'Outfit\', sans-serif" }}>
+      <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
           {children}
         </NextIntlClientProvider>

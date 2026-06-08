@@ -179,7 +179,7 @@ function Hero() {
       display:'flex', alignItems:'center', justifyContent:'center', overflow:'hidden' }}>
       <motion.div style={{ position:'absolute', inset:0 }}
         initial={{ scale:1.08 }} animate={{ scale:1 }} transition={{ duration:2.5, ease:'easeOut' }}>
-        <Image src="/rw-sunset.jpg" alt="La Granja" fill style={{ objectFit:'cover' }} priority />
+        <Image src="/img-aerial.jpg" alt="La Granja" fill style={{ objectFit:'cover', objectPosition:'center' }} priority />
         <div style={{ position:'absolute', inset:0,
           background:'linear-gradient(160deg,rgba(20,28,53,0.92) 0%,rgba(30,42,74,0.7) 45%,rgba(74,124,63,0.25) 100%)' }} />
       </motion.div>
@@ -283,13 +283,13 @@ function About() {
             <div style={{ position:'relative', paddingBottom:'20px' }}>
               <div style={{ position:'relative', borderRadius:16, overflow:'hidden',
                 boxShadow:'0 30px 80px rgba(30,42,74,0.2)', aspectRatio:'4/5' }}>
-                <Image src="/rw-sunset.jpg" alt="La Granja" fill style={{ objectFit:'cover' }} />
+                <Image src="/img-villa-sunset.jpg" alt="La Granja" fill style={{ objectFit:'cover' }} />
               </div>
               <motion.div whileHover={{ scale:1.03 }}
                 style={{ position:'absolute', bottom:-32, right:-24, width:'52%', aspectRatio:'1',
                   borderRadius:12, overflow:'hidden', border:'5px solid #fff',
                   boxShadow:'0 16px 48px rgba(0,0,0,0.18)' }}>
-                <Image src="/rw-family.jpg" alt="Lifestyle" fill style={{ objectFit:'cover' }} />
+                <Image src="/img-pergola.jpg" alt="Lifestyle" fill style={{ objectFit:'cover' }} />
               </motion.div>
               <div style={{ position:'absolute', top:28, left:-16, background:C.navy,
                 padding:'20px 24px', borderRadius:8, boxShadow:'0 12px 40px rgba(20,28,53,0.35)' }}>
@@ -396,13 +396,13 @@ function Story() {
           <Reveal delay={0.2}>
             <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gridTemplateRows:'240px 192px', gap:12 }}>
               <div style={{ gridColumn:'span 2', position:'relative', borderRadius:16, overflow:'hidden', boxShadow:'0 8px 32px rgba(0,0,0,0.12)' }}>
-                <Image src="/rw-horses.jpg" alt="Rayan West" fill style={{ objectFit:'cover' }} />
+                <Image src="/img-family-pool.jpg" alt="Rayan West" fill style={{ objectFit:'cover' }} />
               </div>
               <div style={{ position:'relative', borderRadius:12, overflow:'hidden', boxShadow:'0 4px 20px rgba(0,0,0,0.1)' }}>
-                <Image src="/rw-family.jpg" alt="Family" fill style={{ objectFit:'cover' }} />
+                <Image src="/img-villa-top.jpg" alt="Villa" fill style={{ objectFit:'cover' }} />
               </div>
               <div style={{ position:'relative', borderRadius:12, overflow:'hidden', boxShadow:'0 4px 20px rgba(0,0,0,0.1)' }}>
-                <Image src="/rw-sunset.jpg" alt="Sunset" fill style={{ objectFit:'cover' }} />
+                <Image src="/img-villa-garden.jpg" alt="Garden" fill style={{ objectFit:'cover' }} />
               </div>
             </div>
           </Reveal>
@@ -465,7 +465,7 @@ function Villa() {
         {/* banner */}
         <Reveal style={{ marginBottom:56 }}>
           <div style={{ borderRadius:20, overflow:'hidden', position:'relative', height:280, boxShadow:'0 24px 64px rgba(0,0,0,0.3)' }}>
-            <Image src="/rw-horses.jpg" alt="Rayan West" fill style={{ objectFit:'cover', objectPosition:'center 40%' }} />
+            <Image src="/img-family-pool.jpg" alt="Rayan West" fill style={{ objectFit:'cover', objectPosition:'center 30%' }} />
             <div style={{ position:'absolute', inset:0, background:'linear-gradient(to right,rgba(20,28,53,0.88) 0%,transparent 55%)' }} />
             <div style={{ position:'absolute', bottom:28, left:32 }}>
               <div style={{ fontSize:11, letterSpacing:'3px', textTransform:'uppercase',
@@ -596,7 +596,7 @@ function Investment() {
   return (
     <section id="investment" style={{ padding:'112px 0', position:'relative', overflow:'hidden' }}>
       <div style={{ position:'absolute', inset:0 }}>
-        <Image src="/rw-family.jpg" alt="Investment" fill style={{ objectFit:'cover' }} />
+        <Image src="/img-farm.jpg" alt="Investment" fill style={{ objectFit:'cover', objectPosition:'center' }} />
         <div style={{ position:'absolute', inset:0,
           background:'linear-gradient(160deg,rgba(20,28,53,0.96) 0%,rgba(30,42,74,0.93) 100%)' }} />
       </div>
@@ -671,7 +671,7 @@ function Projects() {
                 <p style={{ fontSize:14, fontStyle:'italic', color:C.textLight, marginBottom:20 }}>{rw('tagline')}</p>
                 <p style={{ fontSize:15, lineHeight:1.8, color:C.textMid, marginBottom:28 }}>{rw('desc')}</p>
                 <div style={{ borderRadius:16, overflow:'hidden', marginBottom:28, position:'relative', height:220 }}>
-                  <Image src="/rw-horses.jpg" alt="Rayan West" fill style={{ objectFit:'cover' }} />
+                  <Image src="/img-family-pool.jpg" alt="Rayan West" fill style={{ objectFit:'cover' }} />
                   <div style={{ position:'absolute', inset:0, background:'linear-gradient(to top,rgba(20,28,53,0.8) 0%,transparent 55%)',
                     display:'flex', alignItems:'flex-end', padding:20 }}>
                     <div>
@@ -705,7 +705,7 @@ function Projects() {
           )}
           {tab!==0 && (
             <motion.div key={`cs${tab}`} initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} exit={{ opacity:0 }}>
-              <ComingSoon d={tab===1 ? rh : gh} img={tab===1 ? '/rw-sunset.jpg' : '/rw-family.jpg'} />
+              <ComingSoon d={tab===1 ? rh : gh} img={tab===1 ? '/img-villa-garden.jpg' : '/img-aerial.jpg'} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -719,7 +719,7 @@ function ComingSoon({ d, img }: { d: ReturnType<typeof useTranslations<'projects
   return (
     <div style={{ borderRadius:20, overflow:'hidden', position:'relative', minHeight:400, background:C.navy }}>
       <div style={{ position:'absolute', inset:0, opacity:0.18 }}>
-        <Image src={img} alt="" fill style={{ objectFit:'cover' }} />
+        <Image src={img} alt="" fill style={{ objectFit:'cover', objectPosition:'center' }} />
       </div>
       <div style={{ position:'relative', zIndex:2, padding:80, textAlign:'center',
         display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', minHeight:400 }}>
@@ -744,7 +744,7 @@ function ComingSoon({ d, img }: { d: ReturnType<typeof useTranslations<'projects
 function LifestyleStrip() {
   return (
     <div style={{ position:'relative', height:440, overflow:'hidden' }}>
-      <Image src="/rw-family.jpg" alt="Life at Rayan West" fill style={{ objectFit:'cover', objectPosition:'center 30%' }} />
+      <Image src="/img-pergola.jpg" alt="Life at Rayan West" fill style={{ objectFit:'cover', objectPosition:'center' }} />
       <div style={{ position:'absolute', inset:0,
         background:'linear-gradient(135deg,rgba(20,28,53,0.92) 0%,rgba(74,124,63,0.28) 60%,transparent 100%)' }} />
       <div style={{ position:'absolute', inset:0, display:'flex', alignItems:'center' }}>

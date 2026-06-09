@@ -676,7 +676,7 @@ function Projects() {
         </div>}/>
 
         {/* tabs */}
-        <Reveal d={.1} s={{display:'flex',justifyContent:'center',margin:'40px 0',overflowX:'auto'}}>
+        <div style={{display:'flex',justifyContent:'center',margin:'40px 0',overflowX:'auto'}}>
           <div style={{display:'flex',gap:4,padding:'6px',borderRadius:100,
             background:'rgba(106,181,74,.08)',border:`1px solid ${G.border}`,flexShrink:0}}>
             {tabs.map((label,i)=>(
@@ -690,7 +690,7 @@ function Projects() {
               </motion.button>
             ))}
           </div>
-        </Reveal>
+        </div>
 
         <AnimatePresence mode="wait">
           {tab===0&&(
@@ -894,10 +894,10 @@ function Sustainability() {
         <div className="row2L">
           <div>
             <Reveal c={<><Tag t={t('tag')}/><ST title={t('title')} bold={t('bold')}/></>}/>
-            <Reveal d={.1} s={{marginTop:22,display:'flex',flexDirection:'column',gap:14,
+            <Reveal d={.1} c={<div style={{marginTop:22,display:'flex',flexDirection:'column',gap:14,
               fontSize:15,color:G.text,lineHeight:1.88}}>
               <p>{t('p1')}</p><p>{t('p2')}</p>
-            </Reveal>
+            </div>}/>
           </div>
           <motion.div variants={sg} initial="hidden" whileInView="visible" viewport={{once:true}}
             className="row2" style={{gap:14,alignItems:'start'}}>

@@ -5,107 +5,63 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { motion, useInView, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 
-/* ── Design tokens ─────────────────────────────────────────── */
+/* ── tokens ── */
 const G = {
-  bg:     '#060d06',
-  card:   '#0c1e0c',
-  border: 'rgba(106,181,74,0.2)',
-  borderH:'rgba(106,181,74,0.5)',
-  green:  '#4a7c3f',
-  mid:    '#6ab54a',
-  light:  '#9de080',
-  glow:   'rgba(106,181,74,0.3)',
-  text:   '#d4ecd4',      /* MAIN text — clearly visible */
-  sub:    '#a8cfa8',      /* secondary text */
-  muted:  '#7aaa7a',      /* muted / captions */
+  bg:    '#060d06', card:  '#0c1e0c',
+  border:'rgba(106,181,74,0.2)', borderH:'rgba(106,181,74,0.5)',
+  green: '#4a7c3f', mid:   '#6ab54a', light: '#9de080',
+  glow:  'rgba(106,181,74,0.3)',
+  text:  '#d4ecd4',   /* ← clearly visible main text */
+  sub:   '#a8cfa8',   /* secondary */
+  muted: '#7aaa7a',   /* captions */
 };
+const up = { hidden:{opacity:0,y:40}, visible:{opacity:1,y:0} };
+const sg = { visible:{transition:{staggerChildren:.1}} };
 
-const fadeUp  = { hidden:{opacity:0,y:40}, visible:{opacity:1,y:0} };
-const stagger = { visible:{transition:{staggerChildren:.1}} };
-
-/* ── Helpers ─────────────────────────────────────────────── */
-function Reveal({children,delay=0,style={},className=''}:{
-  children:React.ReactNode;delay?:number;style?:React.CSSProperties;className?:string}) {
-  const ref=useRef(null);
-  const v=useInView(ref,{once:true,margin:'-50px'});
-  return (
-    <motion.div ref={ref} variants={fadeUp} initial="hidden"
-      animate={v?'visible':'hidden'}
-      transition={{duration:.7,delay,ease:[.25,.1,.25,1]}}
-      style={style} className={className}>
-      {children}
-    </motion.div>
-  );
+/* ── Reveal ── */
+function Reveal({c,d=0,s={},cn=''}:{c:React.ReactNode;d?:number;s?:React.CSSProperties;cn?:string}) {
+  const r=useRef(null), v=useInView(r,{once:true,margin:'-50px'});
+  return <motion.div ref={r} variants={up} initial="hidden" animate={v?'visible':'hidden'}
+    transition={{duration:.7,delay:d,ease:[.25,.1,.25,1]}} style={s} className={cn}>{c}</motion.div>;
 }
 
-function Tag({text}:{text:string}) {
-  return (
-    <div style={{display:'inline-flex',alignItems:'center',gap:10,marginBottom:14,
-      background:'rgba(106,181,74,0.1)',border:`1px solid ${G.border}`,
-      borderRadius:100,padding:'6px 16px'}}>
-      <span style={{width:6,height:6,borderRadius:'50%',background:G.mid,flexShrink:0,
-        boxShadow:`0 0 6px ${G.mid}`}}/>
-      <span style={{fontSize:10,letterSpacing:'3px',textTransform:'uppercase',
-        fontWeight:700,color:G.mid}}>{text}</span>
-    </div>
-  );
+/* ── Tag pill ── */
+function Tag({t}:{t:string}) {
+  return <div style={{display:'inline-flex',alignItems:'center',gap:10,marginBottom:14,
+    background:'rgba(106,181,74,0.1)',border:`1px solid ${G.border}`,borderRadius:100,padding:'6px 16px'}}>
+    <span style={{width:6,height:6,borderRadius:'50%',background:G.mid,flexShrink:0,boxShadow:`0 0 6px ${G.mid}`}}/>
+    <span style={{fontSize:10,letterSpacing:'3px',textTransform:'uppercase',fontWeight:700,color:G.mid}}>{t}</span>
+  </div>;
 }
 
-function SectionTitle({title,bold,center=false,size='large'}:{
-  title:string;bold:string;center?:boolean;size?:'large'|'medium'}) {
-  const fs = size==='large' ? 'clamp(32px,4vw,54px)' : 'clamp(26px,3vw,40px)';
-  return (
-    <div style={{textAlign:center?'center':'start'}}>
-      <h2 className="font-display" style={{fontSize:fs,fontWeight:300,lineHeight:1.1,color:'#fff'}}>
-        {title}{' '}
-        <strong style={{fontWeight:700,color:G.light}}>{bold}</strong>
-      </h2>
-      <div style={{width:48,height:3,borderRadius:2,marginTop:16,
-        background:`linear-gradient(to right,${G.green},${G.light})`,
-        marginLeft:center?'auto':'0',marginRight:center?'auto':'0'}}/>
-    </div>
-  );
+/* ── SectionTitle ── */
+function ST({title,bold,light=false}:{title:string;bold:string;light?:boolean}) {
+  return <>
+    <h2 className="fd" style={{fontSize:'clamp(32px,4.5vw,54px)',fontWeight:300,lineHeight:1.1,
+      color:G.text,marginBottom:8}}>
+      {title} <strong style={{fontWeight:700,color:G.light}}>{bold}</strong>
+    </h2>
+    <div style={{width:52,height:3,borderRadius:2,marginTop:16,
+      background:`linear-gradient(to right,${G.green},${G.light})`}}/>
+  </>;
 }
 
-/* Card container – used for ALL section cards */
-function Card({children,hover=true,style={},className=''}:{
-  children:React.ReactNode;hover?:boolean;style?:React.CSSProperties;className?:string}) {
-  return (
-    <motion.div
-      whileHover={hover?{y:-8,boxShadow:`0 0 0 1px ${G.borderH},0 24px 60px rgba(0,0,0,0.5),0 0 40px rgba(74,180,63,0.1)`}:{}}
-      transition={{duration:.3}}
-      className={`farm-card ${className}`}
-      style={{
-        background:G.card,
-        border:`1px solid ${G.border}`,
-        borderRadius:16,
-        overflow:'hidden',
-        cursor:hover?'default':'auto',
-        ...style,
-      }}>
-      {children}
-    </motion.div>
-  );
-}
-
-/* Particles */
+/* ── Floating particles ── */
 function Particles() {
-  const items=['🌿','🍃','🌱','🌾','✦','❋'];
-  return (
-    <div style={{position:'fixed',inset:0,pointerEvents:'none',zIndex:0,overflow:'hidden'}}>
-      {Array.from({length:14}).map((_,i)=>(
-        <div key={i} className="particle" style={{
-          left:`${(i*17+7)%100}%`,
-          fontSize:`${10+((i*5)%12)}px`,
-          animationDuration:`${16+((i*3)%12)}s`,
-          animationDelay:`${(i*1.4)%10}s`,
-        }}>{items[i%items.length]}</div>
-      ))}
-    </div>
-  );
+  const leaves=['🌿','🍃','🌱','✦','🌾','❋'];
+  return <div style={{position:'fixed',inset:0,pointerEvents:'none',zIndex:0,overflow:'hidden'}}>
+    {Array.from({length:16}).map((_,i)=>(
+      <div key={i} className="ptc" style={{left:`${(i*17+7)%100}%`,fontSize:`${11+(i*7%12)}px`,
+        animationDuration:`${13+(i*3%11)}s`,animationDelay:`${(i*1.4)%9}s`}}>
+        {leaves[i%leaves.length]}
+      </div>
+    ))}
+  </div>;
 }
 
-/* ═══════════════════════════════ NAVBAR ═══════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   NAVBAR
+══════════════════════════════════════════════════════ */
 function Navbar() {
   const t=useTranslations('nav');
   const locale=useLocale();
@@ -133,33 +89,32 @@ function Navbar() {
     {href:'#management',l:t('management')},
   ];
 
-  const navBg = scrolled ? 'rgba(6,13,6,0.97)' : 'rgba(6,13,6,0.15)';
-
   return (
-    <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:1000,
-      background:navBg,backdropFilter:'blur(20px)',transition:'background .4s',
+    <nav style={{position:'fixed',top:0,left:0,right:0,zIndex:1000,transition:'all .4s',
+      background:scrolled?'rgba(6,13,6,0.97)':'rgba(6,13,6,0.25)',
+      backdropFilter:'blur(20px)',
       borderBottom:scrolled?`1px solid ${G.border}`:'1px solid transparent'}}>
-      <div className="si" style={{display:'flex',alignItems:'center',
-        justifyContent:'space-between',padding:scrolled?'12px 40px':'18px 40px',transition:'padding .4s'}}>
+      <div className="si" style={{display:'flex',alignItems:'center',justifyContent:'space-between',
+        padding:scrolled?'10px 40px':'18px 40px',transition:'padding .4s'}}>
 
         {/* Logo */}
-        <a href="#hero" style={{display:'flex',alignItems:'center',gap:10,textDecoration:'none',flexShrink:0}}>
+        <a href="#hero" style={{display:'flex',alignItems:'center',gap:12,textDecoration:'none',flexShrink:0}}>
           <motion.div whileHover={{scale:1.1,rotate:5}}
-            style={{width:38,height:38,borderRadius:'50%',display:'flex',alignItems:'center',
-              justifyContent:'center',color:'#fff',fontSize:16,fontWeight:800,
-              background:`linear-gradient(135deg,#2d5a1b,${G.mid})`,
+            style={{width:40,height:40,borderRadius:'50%',display:'flex',alignItems:'center',
+              justifyContent:'center',color:'#fff',fontSize:18,fontWeight:800,
+              background:'linear-gradient(135deg,#2d5a1b,#6ab54a)',
               boxShadow:`0 4px 20px ${G.glow}`}}>G</motion.div>
-          <span style={{color:'#fff',fontWeight:700,fontSize:17,letterSpacing:.5}}>
+          <span style={{color:'#fff',fontWeight:700,fontSize:17,letterSpacing:1}}>
             LA <span style={{color:G.light}}>GRANJA</span>
           </span>
         </a>
 
         {/* Desktop nav */}
-        <div className="nav-desktop" style={{alignItems:'center',gap:24,
-          flexDirection:isAr?'row-reverse':'row'}}>
+        <div className="nav-desktop" style={{flexDirection:isAr?'row-reverse':'row'}}>
           {links.map(l=>(
-            <a key={l.href} href={l.href} style={{color:G.sub,textDecoration:'none',
-              fontSize:12,fontWeight:600,letterSpacing:'1.5px',textTransform:'uppercase',transition:'color .2s'}}
+            <a key={l.href} href={l.href}
+              style={{color:G.sub,textDecoration:'none',fontSize:12,fontWeight:600,
+                letterSpacing:'2px',textTransform:'uppercase',transition:'color .3s',whiteSpace:'nowrap'}}
               onMouseOver={e=>(e.currentTarget.style.color=G.light)}
               onMouseOut={e=>(e.currentTarget.style.color=G.sub)}>{l.l}</a>
           ))}
@@ -167,53 +122,47 @@ function Navbar() {
             style={{background:`linear-gradient(135deg,${G.green},${G.mid})`,color:'#fff',
               padding:'8px 20px',borderRadius:100,textDecoration:'none',
               fontSize:12,fontWeight:700,letterSpacing:'1px',textTransform:'uppercase',
-              boxShadow:`0 4px 16px ${G.glow}`}}>{t('partners')}</motion.a>
+              boxShadow:`0 4px 16px ${G.glow}`,whiteSpace:'nowrap'}}>{t('partners')}</motion.a>
           <motion.button whileHover={{scale:1.05}} onClick={switchLang}
-            style={{display:'flex',alignItems:'center',gap:7,padding:'8px 16px',
-              borderRadius:100,border:`1px solid ${G.border}`,
-              background:'rgba(106,181,74,0.08)',color:G.light,
-              fontSize:13,fontWeight:700,cursor:'pointer'}}>
+            style={{display:'flex',alignItems:'center',gap:8,padding:'8px 16px',borderRadius:100,
+              border:`1px solid ${G.border}`,background:'rgba(106,181,74,0.08)',
+              color:G.light,fontSize:13,fontWeight:700,cursor:'pointer',whiteSpace:'nowrap'}}>
             <span>{isAr?'🇬🇧':'🇸🇦'}</span><span>{t('langSwitch')}</span>
           </motion.button>
         </div>
 
-        {/* Mobile controls */}
-        <div className="nav-mobile" style={{alignItems:'center',gap:8}}>
+        {/* Mobile nav */}
+        <div className="nav-mobile">
           <button onClick={switchLang}
-            style={{background:`linear-gradient(135deg,${G.green},${G.mid})`,
-              color:'#fff',border:'none',borderRadius:100,padding:'7px 14px',
-              fontSize:12,fontWeight:700,cursor:'pointer'}}>
+            style={{background:`linear-gradient(135deg,${G.green},${G.mid})`,color:'#fff',
+              border:'none',borderRadius:100,padding:'8px 14px',fontSize:13,fontWeight:700,cursor:'pointer'}}>
             {isAr?'🇬🇧 EN':'🇸🇦 ع'}
           </button>
           <button onClick={()=>setOpen(!open)}
-            style={{background:'none',border:`1px solid ${G.border}`,
-              borderRadius:8,cursor:'pointer',padding:'8px 10px',
-              display:'flex',flexDirection:'column',gap:4,alignItems:'center'}}>
+            style={{background:'none',border:'none',cursor:'pointer',padding:8,display:'flex',
+              flexDirection:'column',gap:5}}>
             {[0,1,2].map(i=>(
-              <span key={i} style={{width:20,height:2,background:G.light,display:'block',
-                transition:'all .3s',
-                transform:open&&i===0?'rotate(45deg) translate(4px,4px)':
-                          open&&i===2?'rotate(-45deg) translate(4px,-4px)':'none',
+              <div key={i} style={{width:22,height:2,background:G.light,transition:'all .3s',
+                transform:open&&i===0?'rotate(45deg) translate(5px,5px)':
+                          open&&i===2?'rotate(-45deg) translate(5px,-5px)':'none',
                 opacity:open&&i===1?0:1}}/>
             ))}
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {open&&(
           <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:'auto'}}
-            exit={{opacity:0,height:0}} style={{overflow:'hidden',
-              background:'rgba(6,13,6,0.98)',borderTop:`1px solid ${G.border}`}}>
-            <div style={{padding:'16px 18px 20px',display:'flex',flexDirection:'column',gap:2}}>
-              {[...links,{href:'#partners',l:t('partners')}].map(l=>(
-                <a key={l.href} href={l.href} onClick={()=>setOpen(false)}
-                  style={{color:G.sub,textDecoration:'none',padding:'12px 8px',
-                    fontSize:14,fontWeight:600,letterSpacing:'1.5px',textTransform:'uppercase',
-                    borderBottom:`1px solid rgba(106,181,74,0.08)`}}>{l.l}</a>
-              ))}
-            </div>
+            exit={{opacity:0,height:0}}
+            style={{background:'rgba(6,13,6,0.98)',borderTop:`1px solid ${G.border}`,
+              padding:'12px 18px 20px',display:'flex',flexDirection:'column',gap:4}}>
+            {[...links,{href:'#partners',l:t('partners')}].map(l=>(
+              <a key={l.href} href={l.href} onClick={()=>setOpen(false)}
+                style={{color:G.text,textDecoration:'none',padding:'11px 0',fontSize:14,
+                  fontWeight:600,letterSpacing:'2px',textTransform:'uppercase',
+                  borderBottom:`1px solid ${G.border}`}}>{l.l}</a>
+            ))}
           </motion.div>
         )}
       </AnimatePresence>
@@ -221,7 +170,9 @@ function Navbar() {
   );
 }
 
-/* ═══════════════════════════════ HERO ═════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   HERO
+══════════════════════════════════════════════════════ */
 function Hero() {
   const t=useTranslations('hero');
   const ref=useRef(null);
@@ -232,76 +183,67 @@ function Hero() {
     <section ref={ref} id="hero" style={{position:'relative',height:'100vh',
       display:'flex',alignItems:'center',justifyContent:'center',overflow:'hidden'}}>
       <motion.div style={{position:'absolute',inset:0,y}}>
-        <Image src="/img-aerial.jpg" alt="La Granja" fill
-          style={{objectFit:'cover',objectPosition:'center'}} priority/>
+        <Image src="/img-aerial.jpg" alt="La Granja" fill style={{objectFit:'cover'}} priority/>
         <div style={{position:'absolute',inset:0,
-          background:'linear-gradient(160deg,rgba(6,13,6,0.92) 0%,rgba(9,22,9,0.78) 45%,rgba(6,13,6,0.6) 100%)'}}/>
+          background:'linear-gradient(160deg,rgba(6,13,6,.93) 0%,rgba(10,26,10,.78) 45%,rgba(6,13,6,.6) 100%)'}}/>
         <div style={{position:'absolute',inset:0,
-          background:'radial-gradient(ellipse at 50% 80%,rgba(74,180,63,0.12) 0%,transparent 65%)'}}/>
+          background:'radial-gradient(ellipse at 50% 80%,rgba(106,181,74,.12) 0%,transparent 65%)'}}/>
       </motion.div>
 
-      {/* Animated orbs */}
-      {[{l:'8%',t:'15%',s:320,d:0},{l:'80%',t:'55%',s:220,d:2},{l:'45%',t:'75%',s:440,d:4}].map((o,i)=>(
-        <motion.div key={i} style={{position:'absolute',left:o.l,top:o.t,
-          width:o.s,height:o.s,borderRadius:'50%',pointerEvents:'none',
-          background:`radial-gradient(circle,rgba(74,180,63,0.1) 0%,transparent 70%)`}}
+      {/* orbs */}
+      {[{l:'8%',t:'15%',s:320},{l:'82%',t:'55%',s:220},{l:'48%',t:'75%',s:440}].map((o,i)=>(
+        <motion.div key={i} style={{position:'absolute',left:o.l,top:o.t,width:o.s,height:o.s,
+          borderRadius:'50%',pointerEvents:'none',
+          background:'radial-gradient(circle,rgba(106,181,74,.1) 0%,transparent 70%)'}}
           animate={{scale:[1,1.3,1],opacity:[.3,.7,.3]}}
-          transition={{duration:5+i*2,repeat:Infinity,ease:'easeInOut',delay:o.d}}/>
+          transition={{duration:4+i*2,repeat:Infinity,ease:'easeInOut',delay:i*1.5}}/>
       ))}
 
-      <div style={{position:'relative',zIndex:2,textAlign:'center',padding:'0 20px',maxWidth:900,margin:'0 auto'}}>
-        <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.3}}
-          style={{display:'inline-flex',alignItems:'center',gap:8,
-            background:'rgba(106,181,74,0.12)',border:`1px solid rgba(106,181,74,0.3)`,
-            borderRadius:100,padding:'7px 18px',marginBottom:28}}>
-          <span style={{width:7,height:7,borderRadius:'50%',background:G.mid,
-            boxShadow:`0 0 8px ${G.mid}`,display:'block'}}/>
-          <span style={{fontSize:10,letterSpacing:'4px',textTransform:'uppercase',
-            fontWeight:700,color:G.light}}>{t('eyebrow')}</span>
+      <div style={{position:'relative',zIndex:2,textAlign:'center',padding:'0 20px',maxWidth:920,margin:'0 auto'}}>
+        <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.3}}>
+          <Tag t={t('eyebrow')}/>
         </motion.div>
-
-        <motion.h1 initial={{opacity:0,y:50}} animate={{opacity:1,y:0}} transition={{delay:.5,duration:1}}
-          className="font-display h1"
-          style={{fontSize:'clamp(52px,10vw,128px)',fontWeight:300,lineHeight:.95,
-            color:'#fff',marginBottom:20}}>
+        <motion.h1 initial={{opacity:0,y:50}} animate={{opacity:1,y:0}} transition={{delay:.55,duration:1}}
+          className="fd" style={{fontSize:'clamp(52px,10vw,128px)',fontWeight:300,
+            lineHeight:.95,color:'#fff',marginBottom:18}}>
           {t('title1')}{' '}
-          <span className="shimmer" style={{fontWeight:700}}>{t('title2')}</span>
+          <span className="sh" style={{fontWeight:700}}>{t('title2')}</span>
         </motion.h1>
-
         <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:.8}}
-          className="font-display"
-          style={{fontSize:'clamp(16px,2.5vw,25px)',fontStyle:'italic',
-            color:'rgba(212,236,212,0.75)',marginBottom:22}}>
+          className="fd" style={{fontSize:'clamp(16px,2.5vw,25px)',fontStyle:'italic',
+            color:'rgba(212,236,212,0.72)',marginBottom:22}}>
           {t('sub')}
         </motion.p>
-
-        <motion.p initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1}}
-          style={{color:G.sub,fontSize:'clamp(13px,1.4vw,16px)',lineHeight:1.85,
-            marginBottom:40,maxWidth:560,marginLeft:'auto',marginRight:'auto'}}>
+        <motion.p initial={{opacity:0}} animate={{opacity:1}} transition={{delay:1.0}}
+          style={{color:G.sub,fontSize:'clamp(13px,1.5vw,15px)',lineHeight:1.85,
+            marginBottom:38,maxWidth:560,marginLeft:'auto',marginRight:'auto'}}>
           {t('desc')}
         </motion.p>
-
         <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{delay:1.2}}
           style={{display:'flex',gap:14,justifyContent:'center',flexWrap:'wrap'}}>
           <motion.a whileHover={{scale:1.06}} whileTap={{scale:.97}} href="#projects"
             style={{background:`linear-gradient(135deg,${G.green},${G.mid})`,color:'#fff',
               padding:'14px 34px',borderRadius:100,textDecoration:'none',
               fontSize:13,fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase',
-              boxShadow:`0 8px 28px ${G.glow}`}}>{t('btn1')}</motion.a>
-          <motion.a whileHover={{scale:1.04,background:'rgba(106,181,74,0.1)'}}
-            whileTap={{scale:.97}} href="#about"
-            style={{color:G.light,border:`1.5px solid rgba(106,181,74,0.35)`,
+              boxShadow:`0 8px 28px ${G.glow}`}}>
+            {t('btn1')}
+          </motion.a>
+          <motion.a whileHover={{scale:1.04,background:'rgba(106,181,74,.12)'}} whileTap={{scale:.97}}
+            href="#about"
+            style={{color:G.light,border:`1.5px solid rgba(106,181,74,.4)`,
               padding:'13px 34px',borderRadius:100,textDecoration:'none',
               fontSize:13,fontWeight:600,letterSpacing:'1.5px',textTransform:'uppercase',
-              background:'transparent',transition:'background .3s'}}>{t('btn2')}</motion.a>
+              background:'transparent',transition:'background .3s'}}>
+            {t('btn2')}
+          </motion.a>
         </motion.div>
       </div>
 
       <motion.div animate={{y:[0,10,0]}} transition={{repeat:Infinity,duration:2.4}}
         style={{position:'absolute',bottom:32,left:'50%',transform:'translateX(-50%)',
-          display:'flex',flexDirection:'column',alignItems:'center',gap:4}}>
-        <div style={{width:1,height:36,background:`linear-gradient(to bottom,transparent,${G.mid})`}}/>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={G.mid} strokeWidth="2">
+          display:'flex',flexDirection:'column',alignItems:'center',gap:4,color:'rgba(154,220,100,.4)'}}>
+        <div style={{width:1,height:36,background:'linear-gradient(to bottom,transparent,rgba(106,181,74,.6))'}}/>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M12 5v14M5 12l7 7 7-7"/>
         </svg>
       </motion.div>
@@ -309,19 +251,22 @@ function Hero() {
   );
 }
 
-/* ═══════════════════════════════ STATS ════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   STATS
+══════════════════════════════════════════════════════ */
 function StatsBar() {
   const t=useTranslations('stats');
   const items=[{n:'100',k:'s1'},{n:'94',k:'s2'},{n:'30',k:'s3'},{n:'17+',k:'s4'},{n:'2008',k:'s5'}] as const;
+  const doubled=[...items,...items];
   return (
     <div style={{overflow:'hidden',padding:'16px 0',
-      borderTop:`1px solid ${G.border}`,borderBottom:`1px solid ${G.border}`,
-      background:'rgba(106,181,74,0.06)'}}>
-      <div className="ticker-anim" style={{display:'flex',gap:48,whiteSpace:'nowrap'}}>
-        {[...items,...items].map((s,i)=>(
-          <div key={i} style={{display:'flex',alignItems:'center',gap:10,flexShrink:0}}>
-            <span className="sn" style={{fontSize:26,fontWeight:800}}>{s.n}</span>
-            <span style={{fontSize:12,color:G.sub}}>{t(s.k)}</span>
+      background:'linear-gradient(90deg,rgba(45,90,27,.55),rgba(106,181,74,.35),rgba(45,90,27,.55))',
+      borderTop:`1px solid ${G.border}`,borderBottom:`1px solid ${G.border}`}}>
+      <div className="tk" style={{display:'flex',gap:52,whiteSpace:'nowrap'}}>
+        {doubled.map((s,i)=>(
+          <div key={i} style={{display:'flex',alignItems:'center',gap:12,flexShrink:0}}>
+            <span className="fd" style={{fontSize:26,fontWeight:700,color:G.light}}>{s.n}</span>
+            <span style={{fontSize:13,color:G.sub}}>{t(s.k)}</span>
             <span style={{width:1,height:18,background:G.border,marginLeft:32,display:'inline-block'}}/>
           </div>
         ))}
@@ -330,373 +275,386 @@ function StatsBar() {
   );
 }
 
-/* ═══════════════════════════════ ABOUT ════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   ABOUT  — 3 cols on desktop: img | img-stack | text
+══════════════════════════════════════════════════════ */
 function About() {
   const t=useTranslations('about');
   return (
-    <section id="about" className="sp animated-bg" style={{position:'relative'}}>
+    <section id="about" className="sp abg" style={{position:'relative'}}>
       <Particles/>
       <div className="si" style={{position:'relative',zIndex:2}}>
-        <div style={{display:'grid',gridTemplateColumns:'220px 160px 1fr',gap:28,alignItems:'start'}}>
+        <div className="rowAbout">
 
-          {/* Image 1 */}
-          <Reveal>
-            <motion.div whileHover={{scale:1.02}}
-              style={{borderRadius:14,overflow:'hidden',height:340,
-                border:`1px solid ${G.border}`,
-                boxShadow:'0 20px 50px rgba(0,0,0,0.5)'}}>
-              <Image src="/img-aerial.jpg" alt="La Granja" fill
+          {/* img 1 */}
+          <Reveal c={
+            <motion.div whileHover={{scale:1.015}} className="card"
+              style={{height:360,position:'relative',overflow:'hidden',borderRadius:16}}>
+              <Image src="/img-aerial.jpg" alt="La Granja aerial" fill
                 style={{objectFit:'cover',objectPosition:'center'}}/>
+              <div style={{position:'absolute',inset:0,
+                background:'linear-gradient(to top,rgba(6,13,6,.7) 0%,transparent 50%)'}}/>
             </motion.div>
-          </Reveal>
+          }/>
 
-          {/* Images 2+3 stacked */}
-          <Reveal delay={.1}>
-            <div style={{display:'flex',flexDirection:'column',gap:10,height:340}}>
-              <motion.div whileHover={{scale:1.02}}
-                style={{borderRadius:12,overflow:'hidden',flex:'1 1 0',
-                  border:`1px solid ${G.border}`}}>
+          {/* img 2 stacked */}
+          <Reveal d={.1} c={
+            <div style={{display:'flex',flexDirection:'column',gap:12,height:360}}>
+              <motion.div whileHover={{scale:1.015}} className="card"
+                style={{flex:'1 1 0',position:'relative',overflow:'hidden',borderRadius:14}}>
                 <Image src="/img-pergola.jpg" alt="Pool" fill style={{objectFit:'cover'}}/>
               </motion.div>
-              <motion.div whileHover={{scale:1.02}}
-                style={{borderRadius:12,overflow:'hidden',height:120,
-                  border:`1px solid ${G.border}`}}>
+              <motion.div whileHover={{scale:1.015}} className="card"
+                style={{height:132,position:'relative',overflow:'hidden',borderRadius:14}}>
                 <Image src="/img-villa-garden.jpg" alt="Garden" fill style={{objectFit:'cover'}}/>
               </motion.div>
             </div>
-          </Reveal>
+          }/>
 
-          {/* Text */}
-          <Reveal delay={.15}>
-            <Tag text={t('tag')}/>
-            <SectionTitle title={t('title')} bold={t('bold')}/>
-            <p style={{fontSize:15,lineHeight:1.9,color:G.text,marginTop:20,marginBottom:24}}>
-              {t('desc')}
-            </p>
-            <div style={{display:'flex',flexDirection:'column',gap:10}}>
+          {/* text */}
+          <div>
+            <Reveal c={<>
+              <Tag t={t('tag')}/>
+              <ST title={t('title')} bold={t('bold')}/>
+              <p style={{fontSize:15,lineHeight:1.9,color:G.text,marginTop:24,marginBottom:0}}>
+                {t('desc')}
+              </p>
+            </>}/>
+            <motion.ul variants={sg} initial="hidden" whileInView="visible" viewport={{once:true}}
+              style={{listStyle:'none',marginTop:22,display:'flex',flexDirection:'column',gap:10}}>
               {(['b1','b2','b3','b4'] as const).map((k,i)=>(
-                <motion.div key={i}
-                  whileHover={{x:6,background:'rgba(106,181,74,0.12)',borderColor:G.borderH}}
-                  transition={{duration:.2}}
-                  style={{display:'flex',gap:10,alignItems:'flex-start',padding:'11px 14px',
+                <motion.li key={i} variants={up}
+                  whileHover={{x:6,borderColor:G.borderH,background:'rgba(106,181,74,.1)'}}
+                  style={{display:'flex',gap:12,alignItems:'flex-start',padding:'12px 15px',
                     borderRadius:10,border:`1px solid ${G.border}`,
-                    background:'rgba(106,181,74,0.05)',fontSize:13,
-                    color:G.text,lineHeight:1.75,cursor:'default',transition:'all .2s'}}>
-                  <span style={{color:G.mid,flexShrink:0,marginTop:2}}>🌿</span>
+                    background:'rgba(106,181,74,.06)',fontSize:13,
+                    color:G.text,lineHeight:1.75,cursor:'default',transition:'all .25s'}}>
+                  <span style={{color:G.mid,flexShrink:0,marginTop:1}}>🌿</span>
                   {t(k)}
-                </motion.div>
+                </motion.li>
               ))}
-            </div>
-          </Reveal>
+            </motion.ul>
+          </div>
         </div>
       </div>
-
-      <style>{`
-        @media(max-width:1000px){
-          #about .si > div{grid-template-columns:1fr 1fr!important}
-          #about .si > div > div:nth-child(3){grid-column:span 2!important}
-        }
-        @media(max-width:620px){
-          #about .si > div{grid-template-columns:1fr!important}
-          #about .si > div > div:nth-child(3){grid-column:span 1!important}
-          #about .si > div > div:nth-child(1) > div{height:220px!important}
-          #about .si > div > div:nth-child(2){height:180px!important;flex-direction:row!important}
-        }
-      `}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════ VISION/MISSION ═══════════════════════ */
+/* ══════════════════════════════════════════════════════
+   VISION / MISSION  — 2 image-cards in same row
+══════════════════════════════════════════════════════ */
 function VisionMission() {
   const t=useTranslations('vm');
+  const cards=[
+    {label:t('vlabel'),title:t('vtitle'),text:t('vtext'),img:'/img-villa-garden.jpg'},
+    {label:t('mlabel'),title:t('mtitle'),text:t('mtext'),img:'/img-family-pool.jpg'},
+  ];
   return (
-    <section id="vision" className="sp" style={{background:'#070f07'}}>
+    <section id="vision" className="sp" style={{background:'#060d06'}}>
       <div className="si">
-        <div style={{textAlign:'center',marginBottom:56}}>
-          <Reveal><Tag text={t('tag')}/><SectionTitle title={t('title')} bold={t('title2')} center/></Reveal>
-        </div>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:20}}>
-          {[
-            {label:t('vlabel'),title:t('vtitle'),text:t('vtext'),img:'/img-villa-garden.jpg'},
-            {label:t('mlabel'),title:t('mtitle'),text:t('mtext'),img:'/img-family-pool.jpg'},
-          ].map((c,i)=>(
-            <Reveal key={i} delay={i*.15}>
-              <Card style={{height:'100%'}}>
-                <div style={{position:'relative',height:200,overflow:'hidden'}}>
-                  <Image src={c.img} alt={c.label} fill style={{objectFit:'cover'}}/>
-                  <div style={{position:'absolute',inset:0,
-                    background:'linear-gradient(to top,rgba(12,30,12,1) 0%,rgba(12,30,12,0.3) 60%,transparent 100%)'}}/>
+        <Reveal d={0} c={<div style={{textAlign:'center',marginBottom:52}}>
+          <Tag t={t('tag')}/>
+          <h2 className="fd" style={{fontSize:'clamp(32px,4.5vw,54px)',fontWeight:300,color:G.text}}>
+            {t('title')} <strong style={{fontWeight:700,color:G.light}}>{t('amp')}</strong> {t('title2')}
+          </h2>
+          <div style={{width:52,height:3,borderRadius:2,margin:'16px auto 0',
+            background:`linear-gradient(to right,${G.green},${G.light})`}}/>
+        </div>}/>
+        <div className="row2">
+          {cards.map((card,i)=>(
+            <Reveal key={i} d={i*.15} c={
+              <motion.div whileHover={{y:-8}} className="card"
+                style={{position:'relative',minHeight:380,overflow:'hidden',borderRadius:18}}>
+                <Image src={card.img} alt={card.label} fill style={{objectFit:'cover'}}/>
+                <div style={{position:'absolute',inset:0,
+                  background:'linear-gradient(to top,rgba(6,13,6,.96) 0%,rgba(6,13,6,.6) 50%,rgba(6,13,6,.2) 100%)'}}/>
+                <div style={{position:'absolute',bottom:0,left:0,right:0,padding:'32px 32px 36px'}}>
+                  <Tag t={card.label}/>
+                  <h3 className="fd" style={{fontSize:'clamp(22px,3vw,30px)',fontWeight:600,
+                    color:'#fff',marginBottom:14,lineHeight:1.2}}>{card.title}</h3>
+                  <p style={{fontSize:14,color:G.text,lineHeight:1.85}}>{card.text}</p>
                 </div>
-                <div style={{padding:'28px 28px 32px'}}>
-                  <div style={{display:'inline-flex',alignItems:'center',gap:8,
-                    background:'rgba(106,181,74,0.1)',border:`1px solid ${G.border}`,
-                    borderRadius:100,padding:'5px 14px',marginBottom:16}}>
-                    <span style={{fontSize:10,letterSpacing:'3px',textTransform:'uppercase',
-                      fontWeight:700,color:G.light}}>{c.label}</span>
-                  </div>
-                  <h3 className="font-display" style={{fontSize:'clamp(22px,2.5vw,30px)',
-                    fontWeight:600,color:'#fff',marginBottom:14,lineHeight:1.2}}>{c.title}</h3>
-                  <p style={{fontSize:14,color:G.text,lineHeight:1.88}}>{c.text}</p>
-                </div>
-              </Card>
-            </Reveal>
+              </motion.div>
+            }/>
           ))}
         </div>
       </div>
-      <style>{`@media(max-width:680px){#vision .si > div:last-child{grid-template-columns:1fr!important}}`}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════ STORY ════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   STORY  — points left, image mosaic right — same row
+══════════════════════════════════════════════════════ */
 function Story() {
   const t=useTranslations('story');
-  const pts=[{e:'🌱',k:'p1'},{e:'🏡',k:'p2'},{e:'🌾',k:'p3'},{e:'🚀',k:'p4'}] as const;
+  const pts=[{ic:'🌱',k:'p1'},{ic:'🏡',k:'p2'},{ic:'🌾',k:'p3'},{ic:'🚀',k:'p4'}] as const;
   return (
-    <section id="story" className="sp" style={{background:G.bg}}>
+    <section id="story" className="sp" style={{background:'#071207'}}>
       <div className="si">
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:48,alignItems:'start'}}>
+        <div className="row2L">
           <div>
-            <Reveal><Tag text={t('tag')}/><SectionTitle title={t('title')} bold={t('bold')}/></Reveal>
-            <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{once:true}}
-              style={{marginTop:28,display:'flex',flexDirection:'column',gap:12}}>
+            <Reveal c={<><Tag t={t('tag')}/><ST title={t('title')} bold={t('bold')}/></>}/>
+            <motion.div variants={sg} initial="hidden" whileInView="visible" viewport={{once:true}}
+              style={{display:'flex',flexDirection:'column',gap:12,marginTop:28}}>
               {pts.map((p,i)=>(
-                <motion.div key={i} variants={fadeUp}
-                  whileHover={{x:6,background:'rgba(106,181,74,0.1)',borderColor:G.borderH}}
-                  transition={{duration:.2}}
-                  style={{display:'flex',gap:14,alignItems:'flex-start',padding:'14px 18px',
-                    borderRadius:12,border:`1px solid ${G.border}`,
-                    background:'rgba(106,181,74,0.05)',cursor:'default',transition:'all .25s'}}>
-                  <span style={{fontSize:20,flexShrink:0}}>{p.e}</span>
+                <motion.div key={i} variants={up}
+                  whileHover={{x:8,borderColor:G.borderH,background:'rgba(106,181,74,.1)'}}
+                  className="card"
+                  style={{display:'flex',gap:14,alignItems:'flex-start',padding:'16px 18px',
+                    cursor:'default',transition:'all .25s'}}>
+                  <span style={{fontSize:20,flexShrink:0}}>{p.ic}</span>
                   <p style={{fontSize:14,lineHeight:1.8,color:G.text}}>{t(p.k)}</p>
                 </motion.div>
               ))}
             </motion.div>
           </div>
-          <Reveal delay={.2}>
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-              <div style={{gridColumn:'span 2',position:'relative',height:220,
-                borderRadius:16,overflow:'hidden',border:`1px solid ${G.border}`}}>
+          <Reveal d={.2} c={
+            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',
+              gridTemplateRows:'220px 180px',gap:12}}>
+              <motion.div whileHover={{scale:1.02}} className="card"
+                style={{gridColumn:'span 2',position:'relative',overflow:'hidden',borderRadius:14}}>
                 <Image src="/img-family-pool.jpg" alt="La Granja" fill style={{objectFit:'cover'}}/>
-              </div>
-              <div style={{position:'relative',height:170,borderRadius:12,
-                overflow:'hidden',border:`1px solid ${G.border}`}}>
+              </motion.div>
+              <motion.div whileHover={{scale:1.02}} className="card"
+                style={{position:'relative',overflow:'hidden',borderRadius:12}}>
                 <Image src="/img-villa-top.jpg" alt="Villa" fill style={{objectFit:'cover'}}/>
-              </div>
-              <div style={{position:'relative',height:170,borderRadius:12,
-                overflow:'hidden',border:`1px solid ${G.border}`}}>
+              </motion.div>
+              <motion.div whileHover={{scale:1.02}} className="card"
+                style={{position:'relative',overflow:'hidden',borderRadius:12}}>
                 <Image src="/img-villa-garden.jpg" alt="Garden" fill style={{objectFit:'cover'}}/>
-              </div>
+              </motion.div>
             </div>
-          </Reveal>
+          }/>
         </div>
       </div>
-      <style>{`@media(max-width:740px){#story .si > div{grid-template-columns:1fr!important}}`}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════ VALUES ═══════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   VALUES  — 3-col card grid
+══════════════════════════════════════════════════════ */
 function Values() {
   const t=useTranslations('values');
   const icons=['👥','✅','♻️','💰','❤️','💡'];
   const vals=t.raw('v') as Array<{title:string;text:string}>;
   return (
-    <section id="values" className="sp" style={{background:'#070f07'}}>
-      <div className="si">
-        <div style={{textAlign:'center',marginBottom:56}}>
-          <Reveal><Tag text={t('tag')}/><SectionTitle title={t('title')} bold={t('bold')} center/></Reveal>
-        </div>
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{once:true}}
-          style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20}}>
+    <section id="values" className="sp" style={{background:'#060d06',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',
+        width:700,height:700,borderRadius:'50%',pointerEvents:'none',
+        background:'radial-gradient(circle,rgba(106,181,74,.05) 0%,transparent 65%)'}}/>
+      <div className="si" style={{position:'relative',zIndex:1}}>
+        <Reveal d={0} c={<div style={{textAlign:'center',marginBottom:52}}>
+          <Tag t={t('tag')}/>
+          <ST title={t('title')} bold={t('bold')}/>
+        </div>}/>
+        <motion.div variants={sg} initial="hidden" whileInView="visible" viewport={{once:true}}
+          className="row3">
           {vals.map((v,i)=>(
-            <motion.div key={i} variants={fadeUp}>
-              <Card className="vc" style={{padding:'28px 24px',height:'100%'}}>
-                <div style={{fontSize:34,marginBottom:14}}>{icons[i]}</div>
-                <h3 style={{fontSize:16,fontWeight:700,color:G.light,marginBottom:10}}>{v.title}</h3>
-                <p style={{fontSize:13,color:G.text,lineHeight:1.8}}>{v.text}</p>
-              </Card>
+            <motion.div key={i} variants={up} className="card vc"
+              style={{padding:'28px 24px',cursor:'default'}}>
+              <div style={{fontSize:34,marginBottom:14}}>{icons[i]}</div>
+              <h3 style={{fontSize:16,fontWeight:700,color:G.light,marginBottom:10}}>{v.title}</h3>
+              <p style={{fontSize:13,color:G.text,lineHeight:1.78}}>{v.text}</p>
             </motion.div>
           ))}
         </motion.div>
       </div>
-      <style>{`
-        @media(max-width:860px){#values .si > div:last-child{grid-template-columns:1fr 1fr!important}}
-        @media(max-width:500px){#values .si > div:last-child{grid-template-columns:1fr!important}}
-      `}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════ VILLA ════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   VILLA  — banner + 2-col below
+══════════════════════════════════════════════════════ */
 function Villa() {
   const t=useTranslations('villa');
   const vb=useTranslations('villa_banner');
   const features=t.raw('f') as Array<{title:string;text:string}>;
   const icons=['🌿','💚','♻️','🌾'];
   return (
-    <section id="villa" className="sp" style={{background:G.bg}}>
-      <div className="si">
-        {/* Full-width banner card */}
-        <Reveal style={{marginBottom:40}}>
-          <Card hover={false} style={{overflow:'hidden',borderRadius:20}}>
-            <div style={{position:'relative',height:280}}>
-              <Image src="/img-family-pool.jpg" alt="La Granja" fill
-                style={{objectFit:'cover',objectPosition:'center 30%'}}/>
-              <div style={{position:'absolute',inset:0,
-                background:'linear-gradient(to right,rgba(6,13,6,.92) 0%,rgba(6,13,6,.4) 55%,transparent 100%)'}}/>
-              <div style={{position:'absolute',inset:0,padding:'0 40px',display:'flex',
-                flexDirection:'column',justifyContent:'center'}}>
-                <Tag text={t('tag')}/>
-                <div className="font-display" style={{fontSize:'clamp(20px,3vw,32px)',
-                  fontWeight:600,color:'#fff'}}>{vb('subtitle')}</div>
+    <section id="villa" className="sp" style={{background:'#040b04',position:'relative',overflow:'hidden'}}>
+      <motion.div animate={{scale:[1,1.2,1],opacity:[.25,.5,.25]}}
+        transition={{duration:9,repeat:Infinity,ease:'easeInOut'}}
+        style={{position:'absolute',bottom:'-25%',left:'50%',transform:'translateX(-50%)',
+          width:900,height:900,borderRadius:'50%',pointerEvents:'none',
+          background:'radial-gradient(circle,rgba(106,181,74,.1) 0%,transparent 60%)'}}/>
+      <div className="si" style={{position:'relative',zIndex:2}}>
+        {/* full-width banner */}
+        <Reveal d={0} s={{marginBottom:48}} c={
+          <div className="card" style={{position:'relative',height:280,overflow:'hidden',borderRadius:20}}>
+            <Image src="/img-family-pool.jpg" alt="La Granja" fill
+              style={{objectFit:'cover',objectPosition:'center 30%'}}/>
+            <div style={{position:'absolute',inset:0,
+              background:'linear-gradient(to right,rgba(4,11,4,.92) 0%,rgba(4,11,4,.3) 60%,transparent 100%)'}}/>
+            <div style={{position:'absolute',inset:0,display:'flex',flexDirection:'column',
+              justifyContent:'center',padding:'0 44px'}}>
+              <Tag t={t('tag')}/>
+              <div className="fd" style={{fontSize:'clamp(20px,3vw,30px)',fontWeight:600,color:'#fff'}}>
+                {vb('subtitle')}
               </div>
             </div>
-          </Card>
-        </Reveal>
+          </div>
+        }/>
 
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:32,alignItems:'start'}}>
-          {/* Headlines + text */}
-          <Reveal>
-            <h2 className="font-display" style={{fontSize:'clamp(40px,6vw,88px)',fontWeight:300,
-              color:'#fff',lineHeight:1,marginBottom:32}}>
-              <span className="shimmer" style={{fontWeight:700,display:'block'}}>{t('l1')}</span>
-              <span className="shimmer" style={{fontWeight:700,display:'block'}}>{t('l2')}</span>
-              <span className="shimmer" style={{fontWeight:700,display:'block'}}>{t('l3')}</span>
-            </h2>
-            <p style={{fontSize:15,color:G.text,lineHeight:1.9,marginBottom:12}}>{t('p1')}</p>
-            <p style={{fontSize:15,color:G.text,lineHeight:1.9,marginBottom:12}}>{t('p2')}</p>
-            <p style={{fontSize:15,color:G.text,lineHeight:1.9,marginBottom:28}}>{t('p3')}</p>
-            <motion.a whileHover={{scale:1.05}} href="#projects"
-              style={{display:'inline-block',background:`linear-gradient(135deg,${G.green},${G.mid})`,
-                color:'#fff',padding:'13px 32px',borderRadius:100,textDecoration:'none',
-                fontSize:13,fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase',
-                boxShadow:`0 8px 24px ${G.glow}`}}>{t('btn')}</motion.a>
-          </Reveal>
+        {/* headline */}
+        <Reveal c={
+          <h2 className="fd" style={{fontSize:'clamp(40px,7vw,88px)',fontWeight:300,
+            color:'#fff',lineHeight:1,marginBottom:48}}>
+            <span className="sh" style={{fontWeight:700}}>{t('l1')}</span><br/>
+            <span className="sh" style={{fontWeight:700}}>{t('l2')}</span><br/>
+            <span className="sh" style={{fontWeight:700}}>{t('l3')}</span>
+          </h2>
+        }/>
 
-          {/* Feature cards 2×2 */}
-          <Reveal delay={.1}>
-            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14}}>
-              {features.map((f,i)=>(
-                <Card key={i} style={{padding:'20px 18px'}}>
-                  <div style={{fontSize:22,marginBottom:10}}>{icons[i]}</div>
-                  <div style={{fontSize:13,fontWeight:700,color:G.light,marginBottom:6}}>{f.title}</div>
-                  <div style={{fontSize:12,color:G.text,lineHeight:1.65}}>{f.text}</div>
-                </Card>
-              ))}
+        {/* 2-col */}
+        <div className="row2L" style={{gap:56}}>
+          <Reveal d={.1} c={
+            <div style={{display:'flex',flexDirection:'column',gap:16,
+              fontSize:15,color:G.text,lineHeight:1.9}}>
+              <p>{t('p1')}</p><p>{t('p2')}</p><p>{t('p3')}</p>
+              <motion.a whileHover={{scale:1.05,boxShadow:`0 16px 40px ${G.glow}`}}
+                whileTap={{scale:.97}} href="#projects"
+                style={{display:'inline-block',marginTop:8,
+                  background:`linear-gradient(135deg,${G.green},${G.mid})`,
+                  color:'#fff',padding:'13px 34px',borderRadius:100,
+                  textDecoration:'none',width:'fit-content',
+                  fontSize:13,fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase',
+                  boxShadow:`0 8px 28px ${G.glow}`}}>
+                {t('btn')}
+              </motion.a>
             </div>
-          </Reveal>
+          }/>
+          <motion.div variants={sg} initial="hidden" whileInView="visible" viewport={{once:true}}
+            style={{display:'flex',flexDirection:'column',gap:12}}>
+            {features.map((f,i)=>(
+              <motion.div key={i} variants={up}
+                whileHover={{x:6,borderColor:G.borderH,background:'rgba(106,181,74,.1)'}}
+                className="card"
+                style={{display:'flex',gap:14,alignItems:'flex-start',padding:'15px 18px',
+                  cursor:'default',transition:'all .25s'}}>
+                <span style={{fontSize:18,flexShrink:0}}>{icons[i]}</span>
+                <div>
+                  <div style={{fontSize:13,fontWeight:700,color:G.light,marginBottom:3}}>{f.title}</div>
+                  <div style={{fontSize:13,color:G.text,lineHeight:1.65}}>{f.text}</div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </div>
-      <style>{`@media(max-width:740px){#villa .si > div:last-child{grid-template-columns:1fr!important}}`}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════ MANAGEMENT ═══════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   MANAGEMENT  — 2 cards in same row
+══════════════════════════════════════════════════════ */
 function Management() {
   const t=useTranslations('management');
   const ta=useTranslations('management.ahmed');
   const tm=useTranslations('management.mohamed');
   const founders=[
-    {d:ta,i:'A',g:`linear-gradient(135deg,#2d5a1b,${G.mid})`},
-    {d:tm,i:'M',g:'linear-gradient(135deg,#1a3a2a,#2d6b4a)'},
+    {d:ta,init:'A',grad:'linear-gradient(135deg,#2d5a1b,#6ab54a)'},
+    {d:tm,init:'M',grad:'linear-gradient(135deg,#1a4a2a,#2d6b4a)'},
   ];
   return (
-    <section id="management" className="sp" style={{background:'#070f07'}}>
+    <section id="management" className="sp" style={{background:'#071207'}}>
       <div className="si">
-        <div style={{textAlign:'center',marginBottom:48}}>
-          <Reveal><Tag text={t('tag')}/><SectionTitle title={t('title')} bold={t('bold')} center/></Reveal>
-          <Reveal delay={.1}><p style={{fontSize:15,color:G.sub,maxWidth:500,margin:'14px auto 0'}}>{t('desc')}</p></Reveal>
-        </div>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24}}>
-          {founders.map((f,idx)=>{
+        <Reveal d={0} c={<div style={{textAlign:'center',marginBottom:48}}>
+          <Tag t={t('tag')}/>
+          <ST title={t('title')} bold={t('bold')}/>
+          <p style={{fontSize:15,color:G.text,maxWidth:520,margin:'20px auto 0'}}>{t('desc')}</p>
+        </div>}/>
+        <div className="row2">
+          {founders.map((f,i)=>{
             const tags=f.d.raw('tags') as string[];
             const pts=f.d.raw('points') as string[];
             return (
-              <Reveal key={idx} delay={idx*.15}>
-                <Card style={{overflow:'hidden'}}>
-                  {/* Header */}
-                  <div style={{padding:'32px 32px 24px',
+              <Reveal key={i} d={i*.15} c={
+                <motion.div whileHover={{y:-10}} className="card" style={{overflow:'hidden'}}>
+                  <div style={{padding:'36px 32px 24px',
                     background:'linear-gradient(135deg,#061506,#0d2a0d)',
                     display:'flex',flexDirection:'column',alignItems:'flex-start'}}>
                     <div style={{width:68,height:68,borderRadius:'50%',display:'flex',
                       alignItems:'center',justifyContent:'center',color:'#fff',
-                      fontSize:30,fontWeight:800,marginBottom:14,background:f.g,
-                      boxShadow:`0 6px 20px ${G.glow}`}}>{f.i}</div>
-                    <div className="font-display" style={{fontSize:'clamp(20px,2.5vw,28px)',
-                      fontWeight:600,color:'#fff',marginBottom:4}}>{f.d('name')}</div>
-                    <div style={{fontSize:10,letterSpacing:'2px',textTransform:'uppercase',
+                      fontSize:30,fontWeight:800,marginBottom:14,background:f.grad,
+                      boxShadow:`0 8px 24px ${G.glow}`}}>{f.init}</div>
+                    <div className="fd" style={{fontSize:'clamp(20px,3vw,28px)',fontWeight:600,
+                      color:'#fff',marginBottom:5}}>{f.d('name')}</div>
+                    <div style={{fontSize:11,letterSpacing:'2px',textTransform:'uppercase',
                       fontWeight:700,color:G.mid}}>{f.d('role')}</div>
                   </div>
-                  {/* Body */}
-                  <div style={{padding:'22px 32px 30px',borderTop:`3px solid ${G.green}`}}>
-                    <div style={{display:'flex',flexWrap:'wrap',gap:7,marginBottom:18}}>
+                  <div style={{padding:'24px 32px 32px',borderTop:`3px solid ${G.green}`}}>
+                    <div style={{display:'flex',flexWrap:'wrap',gap:8,marginBottom:18}}>
                       {tags.map((tag,j)=>(
-                        <span key={j} style={{padding:'4px 12px',borderRadius:100,fontSize:11,
-                          fontWeight:700,background:'rgba(106,181,74,0.1)',
-                          color:G.light,border:`1px solid ${G.border}`}}>{tag}</span>
+                        <span key={j} style={{padding:'4px 12px',borderRadius:100,fontSize:12,
+                          fontWeight:700,background:'rgba(106,181,74,.1)',
+                          color:G.light,border:`1px solid rgba(106,181,74,.25)`}}>{tag}</span>
                       ))}
                     </div>
                     <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:10}}>
                       {pts.map((p,j)=>(
-                        <li key={j} style={{display:'flex',gap:9,alignItems:'flex-start',
+                        <li key={j} style={{display:'flex',gap:10,alignItems:'flex-start',
                           fontSize:13,color:G.text,lineHeight:1.75}}>
-                          <span style={{color:G.mid,fontSize:10,marginTop:4,flexShrink:0}}>▶</span>{p}
+                          <span style={{color:G.mid,fontSize:11,marginTop:3,flexShrink:0}}>▶</span>{p}
                         </li>
                       ))}
                     </ul>
                   </div>
-                </Card>
-              </Reveal>
+                </motion.div>
+              }/>
             );
           })}
         </div>
       </div>
-      <style>{`@media(max-width:680px){#management .si > div:last-child{grid-template-columns:1fr!important}}`}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════ INVESTMENT ═══════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   INVESTMENT  — 3-col card grid over farm bg
+══════════════════════════════════════════════════════ */
 function Investment() {
   const t=useTranslations('investment');
   const cards=t.raw('cards') as Array<{icon:string;title:string;text:string}>;
   return (
-    <section id="investment" className="sp" style={{position:'relative',overflow:'hidden',background:G.bg}}>
+    <section id="investment" className="sp" style={{position:'relative',overflow:'hidden'}}>
       <div style={{position:'absolute',inset:0}}>
-        <Image src="/img-farm.jpg" alt="Farm" fill style={{objectFit:'cover'}}/>
+        <Image src="/img-farm.jpg" alt="Farm" fill style={{objectFit:'cover',objectPosition:'center'}}/>
         <div style={{position:'absolute',inset:0,
-          background:'linear-gradient(160deg,rgba(6,13,6,.97) 0%,rgba(7,16,7,.94) 100%)'}}/>
+          background:'linear-gradient(160deg,rgba(4,10,4,.97) 0%,rgba(6,18,6,.94) 100%)'}}/>
+        <div style={{position:'absolute',inset:0,
+          background:'radial-gradient(ellipse at 50% 100%,rgba(106,181,74,.1) 0%,transparent 55%)'}}/>
       </div>
       <div className="si" style={{position:'relative',zIndex:2}}>
-        <div style={{textAlign:'center',marginBottom:56}}>
-          <Reveal><Tag text={t('tag')}/><SectionTitle title={t('title')} bold={t('bold')} center/></Reveal>
-        </div>
-        <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{once:true}}
-          style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:20}}>
+        <Reveal d={0} c={<div style={{textAlign:'center',marginBottom:52}}>
+          <Tag t={t('tag')}/>
+          <ST title={t('title')} bold={t('bold')}/>
+        </div>}/>
+        <motion.div variants={sg} initial="hidden" whileInView="visible" viewport={{once:true}}
+          className="row3">
           {cards.map((c,i)=>(
-            <motion.div key={i} variants={fadeUp}>
-              <Card style={{padding:'28px 22px',height:'100%'}}>
-                <div style={{fontSize:30,marginBottom:14}}>{c.icon}</div>
-                <h3 className="font-display" style={{fontSize:'clamp(16px,1.8vw,20px)',
-                  fontWeight:600,color:G.light,marginBottom:10}}>{c.title}</h3>
-                <p style={{fontSize:13,color:G.text,lineHeight:1.8}}>{c.text}</p>
-              </Card>
+            <motion.div key={i} variants={up} className="card"
+              whileHover={{y:-10,borderColor:G.borderH,background:'rgba(106,181,74,.1)'}}
+              style={{padding:'28px 24px',cursor:'default',transition:'all .35s'}}>
+              <div style={{fontSize:28,marginBottom:14}}>{c.icon}</div>
+              <h3 className="fd" style={{fontSize:'clamp(16px,2vw,20px)',fontWeight:600,
+                color:G.light,marginBottom:10}}>{c.title}</h3>
+              <p style={{fontSize:13,color:G.text,lineHeight:1.78}}>{c.text}</p>
             </motion.div>
           ))}
         </motion.div>
       </div>
-      <style>{`
-        @media(max-width:860px){#investment .si > div:last-child{grid-template-columns:1fr 1fr!important}}
-        @media(max-width:500px){#investment .si > div:last-child{grid-template-columns:1fr!important}}
-      `}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════ PROJECTS ═════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   PROJECTS
+══════════════════════════════════════════════════════ */
 function Projects() {
   const t=useTranslations('projects');
   const rw=useTranslations('projects.rw');
@@ -705,29 +663,29 @@ function Projects() {
   const vb=useTranslations('villa_banner');
   const [tab,setTab]=useState(0);
   const tabs=t.raw('tabs') as string[];
-  const rwStats=rw.raw('stats') as Array<{num:string;label:string}>;
-  const rwFeats=rw.raw('features') as Array<{title:string;text:string}>;
+  const rwS=rw.raw('stats')    as Array<{num:string;label:string}>;
+  const rwF=rw.raw('features') as Array<{title:string;text:string}>;
 
   return (
-    <section id="projects" className="sp" style={{background:'#070f07'}}>
+    <section id="projects" className="sp" style={{background:'#071207'}}>
       <div className="si">
-        <div style={{textAlign:'center',marginBottom:20}}>
-          <Reveal><Tag text={t('tag')}/><SectionTitle title={t('title')} bold={t('bold')} center/></Reveal>
-          <Reveal delay={.1}><p style={{fontSize:15,color:G.sub,maxWidth:560,margin:'14px auto 0'}}>{t('desc')}</p></Reveal>
-        </div>
+        <Reveal d={0} c={<div style={{textAlign:'center',marginBottom:20}}>
+          <Tag t={t('tag')}/>
+          <ST title={t('title')} bold={t('bold')}/>
+          <p style={{fontSize:15,color:G.text,maxWidth:600,margin:'20px auto 0'}}>{t('desc')}</p>
+        </div>}/>
 
-        {/* Tabs */}
-        <Reveal style={{display:'flex',justifyContent:'center',margin:'36px 0',overflowX:'auto'}}>
-          <div style={{display:'inline-flex',gap:4,padding:'5px',borderRadius:100,
-            background:'rgba(106,181,74,0.07)',border:`1px solid ${G.border}`,flexShrink:0}}>
+        {/* tabs */}
+        <Reveal d={.1} s={{display:'flex',justifyContent:'center',margin:'40px 0',overflowX:'auto'}}>
+          <div style={{display:'flex',gap:4,padding:'6px',borderRadius:100,
+            background:'rgba(106,181,74,.08)',border:`1px solid ${G.border}`,flexShrink:0}}>
             {tabs.map((label,i)=>(
               <motion.button key={i} onClick={()=>setTab(i)}
                 animate={{background:tab===i?G.green:'transparent',
                   color:tab===i?'#fff':G.sub,
                   boxShadow:tab===i?`0 4px 16px ${G.glow}`:'none'}}
-                style={{padding:'9px 20px',borderRadius:100,fontSize:12,
-                  fontWeight:700,cursor:'pointer',border:'none',whiteSpace:'nowrap',
-                  letterSpacing:'.5px'}}>
+                style={{padding:'9px 20px',borderRadius:100,fontSize:12,fontWeight:700,
+                  cursor:'pointer',border:'none',whiteSpace:'nowrap',letterSpacing:'.5px'}}>
                 {label}
               </motion.button>
             ))}
@@ -736,136 +694,134 @@ function Projects() {
 
         <AnimatePresence mode="wait">
           {tab===0&&(
-            <motion.div key="rw" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-20}}>
-              <Card hover={false} style={{padding:'36px 32px'}}>
-                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:40,alignItems:'start'}}>
-                  <div>
-                    <div style={{display:'inline-flex',alignItems:'center',gap:8,
-                      background:'rgba(106,181,74,0.1)',border:`1px solid ${G.border}`,
-                      borderRadius:100,padding:'5px 14px',marginBottom:14}}>
-                      <span style={{fontSize:10,letterSpacing:'3px',textTransform:'uppercase',
-                        fontWeight:700,color:G.light}}>{rw('label')}</span>
-                    </div>
-                    <h3 className="font-display" style={{fontSize:'clamp(32px,4vw,48px)',
-                      fontWeight:700,marginBottom:6,lineHeight:1.1}}>
-                      <span style={{color:'#fff'}}>RAYAN </span>
-                      <span className="shimmer">WEST</span>
-                    </h3>
-                    <p style={{fontSize:13,fontStyle:'italic',color:G.muted,marginBottom:14}}>{rw('tagline')}</p>
-                    <p style={{fontSize:14,lineHeight:1.85,color:G.text,marginBottom:22}}>{rw('desc')}</p>
-                    <div style={{borderRadius:12,overflow:'hidden',marginBottom:22,
-                      position:'relative',height:190,border:`1px solid ${G.border}`}}>
-                      <Image src="/img-villa-top.jpg" alt="Rayan West" fill style={{objectFit:'cover'}}/>
-                      <div style={{position:'absolute',inset:0,display:'flex',alignItems:'flex-end',
-                        padding:16,background:'linear-gradient(to top,rgba(6,13,6,.85) 0%,transparent 55%)'}}>
-                        <div>
-                          <div className="font-display" style={{fontSize:17,fontWeight:700,color:'#fff'}}>{vb('enjoy')}</div>
-                          <div style={{fontSize:11,color:G.light}}>{vb('enjoyAr')}</div>
-                        </div>
+            <motion.div key="rw" initial={{opacity:0,y:20}} animate={{opacity:1,y:0}}
+              exit={{opacity:0,y:-20}} className="row2L" style={{gap:52,alignItems:'start'}}>
+              <div>
+                <Tag t={rw('label')}/>
+                <h3 className="fd" style={{fontSize:'clamp(32px,5vw,48px)',fontWeight:700,
+                  marginBottom:8,lineHeight:1.1}}>
+                  <span style={{color:G.text}}>RAYAN </span>
+                  <span className="sh">WEST</span>
+                </h3>
+                <p style={{fontSize:13,fontStyle:'italic',color:G.sub,marginBottom:16}}>{rw('tagline')}</p>
+                <p style={{fontSize:14,lineHeight:1.85,color:G.text,marginBottom:24}}>{rw('desc')}</p>
+
+                <div className="card" style={{position:'relative',height:200,overflow:'hidden',
+                  borderRadius:14,marginBottom:24}}>
+                  <Image src="/img-villa-top.jpg" alt="Rayan West" fill style={{objectFit:'cover'}}/>
+                  <div style={{position:'absolute',inset:0,display:'flex',alignItems:'flex-end',
+                    padding:16,background:'linear-gradient(to top,rgba(4,11,4,.88) 0%,transparent 55%)'}}>
+                    <div>
+                      <div className="fd" style={{fontSize:16,fontWeight:700,color:'#fff'}}>
+                        {vb('enjoy')}
                       </div>
+                      <div style={{fontSize:11,color:G.light}}>{vb('enjoyAr')}</div>
                     </div>
-                    <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}}>
-                      {rwStats.map((s,i)=>(
-                        <motion.div key={i} whileHover={{scale:1.04}}
-                          style={{textAlign:'center',padding:'16px',borderRadius:10,
-                            background:'rgba(106,181,74,0.07)',border:`1px solid ${G.border}`,
-                            borderBottom:`3px solid ${G.green}`,cursor:'default'}}>
-                          <div className="sn" style={{fontSize:34,fontWeight:800}}>{s.num}</div>
-                          <div style={{fontSize:11,color:G.sub,marginTop:4}}>{s.label}</div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                  <div style={{display:'flex',flexDirection:'column',gap:16}}>
-                    {rwFeats.map((f,i)=>(
-                      <motion.div key={i} initial={{opacity:0,x:20}} animate={{opacity:1,x:0}}
-                        transition={{delay:i*.08}}
-                        whileHover={{x:6,background:'rgba(106,181,74,0.08)'}}
-                        style={{borderLeft:`3px solid ${G.mid}`,paddingLeft:16,paddingBlock:4,
-                          transition:'all .25s',cursor:'default'}}>
-                        <div style={{fontSize:14,fontWeight:700,color:G.light,marginBottom:5}}>{f.title}</div>
-                        <div style={{fontSize:13,color:G.text,lineHeight:1.72}}>{f.text}</div>
-                      </motion.div>
-                    ))}
                   </div>
                 </div>
-              </Card>
+
+                <div className="row2" style={{gap:12}}>
+                  {rwS.map((s,i)=>(
+                    <motion.div key={i} whileHover={{scale:1.04}} className="card"
+                      style={{textAlign:'center',padding:'16px',borderBottom:`3px solid ${G.green}`,
+                        cursor:'default'}}>
+                      <div className="fd" style={{fontSize:34,fontWeight:800,color:G.light}}>{s.num}</div>
+                      <div style={{fontSize:11,color:G.sub,marginTop:4}}>{s.label}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{display:'flex',flexDirection:'column',gap:16}}>
+                {rwF.map((f,i)=>(
+                  <motion.div key={i} initial={{opacity:0,x:20}} animate={{opacity:1,x:0}}
+                    transition={{delay:i*.1}}
+                    whileHover={{x:6,borderColor:G.borderH,background:'rgba(106,181,74,.1)'}}
+                    className="card"
+                    style={{padding:'16px 18px',cursor:'default',transition:'all .25s'}}>
+                    <div style={{fontSize:14,fontWeight:700,color:G.light,marginBottom:5}}>{f.title}</div>
+                    <div style={{fontSize:13,color:G.text,lineHeight:1.72}}>{f.text}</div>
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
           )}
           {tab!==0&&(
-            <motion.div key={`cs${tab}`} initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} exit={{opacity:0}}>
-              <CSPanel d={tab===1?rh:gh} img={tab===1?'/img-villa-garden.jpg':'/img-aerial.jpg'}/>
+            <motion.div key={`cs${tab}`} initial={{opacity:0,y:20}}
+              animate={{opacity:1,y:0}} exit={{opacity:0}}>
+              <CSPanel d={tab===1?rh:gh}
+                img={tab===1?'/img-villa-garden.jpg':'/img-aerial.jpg'}/>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
-      <style>{`
-        @media(max-width:740px){
-          #projects .si > div:last-child > div > div > div[style*="grid-template-columns:1fr 1fr"]{
-            grid-template-columns:1fr!important
-          }
-        }
-      `}</style>
     </section>
   );
 }
 
 function CSPanel({d,img}:{d:ReturnType<typeof useTranslations<'projects.rh'>>;img:string}) {
   return (
-    <Card hover={false} style={{minHeight:380,overflow:'hidden',position:'relative'}}>
-      <div style={{position:'absolute',inset:0,opacity:.2}}>
+    <div className="card" style={{position:'relative',minHeight:400,overflow:'hidden',borderRadius:20}}>
+      <div style={{position:'absolute',inset:0,opacity:.22}}>
         <Image src={img} alt="" fill style={{objectFit:'cover'}}/>
       </div>
-      <div style={{position:'relative',zIndex:2,padding:'64px 32px',textAlign:'center',
-        display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',minHeight:380}}>
-        <Tag text={d('label')}/>
-        <h3 className="font-display shimmer" style={{fontSize:'clamp(32px,5vw,52px)',fontWeight:700,marginBottom:10}}>{d('title')}</h3>
-        <p style={{fontSize:13,color:G.muted,marginBottom:14}}>{d('sub')}</p>
+      <div style={{position:'relative',zIndex:2,padding:'64px 40px',textAlign:'center',
+        display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',minHeight:400}}>
+        <Tag t={d('label')}/>
+        <h3 className="fd sh" style={{fontSize:'clamp(32px,5vw,52px)',fontWeight:700,marginBottom:12}}>
+          {d('title')}
+        </h3>
+        <p style={{fontSize:13,color:G.sub,marginBottom:14}}>{d('sub')}</p>
         <p style={{fontSize:15,color:G.text,maxWidth:520,lineHeight:1.85,marginBottom:32}}>{d('text')}</p>
-        <motion.span whileHover={{scale:1.05}}
-          style={{display:'inline-block',padding:'11px 32px',borderRadius:100,
+        <motion.span whileHover={{scale:1.06}}
+          style={{display:'inline-block',padding:'12px 36px',borderRadius:100,
             background:`linear-gradient(135deg,${G.green},${G.mid})`,
-            color:'#fff',fontSize:12,fontWeight:700,letterSpacing:'2px',textTransform:'uppercase',cursor:'default'}}>
+            color:'#fff',fontSize:13,fontWeight:700,letterSpacing:'2px',
+            textTransform:'uppercase',cursor:'default',
+            boxShadow:`0 8px 24px ${G.glow}`}}>
           {d('badge')}
         </motion.span>
       </div>
-    </Card>
+    </div>
   );
 }
 
-/* ═══════════════════════════════ LIFESTYLE STRIP ══════════════════════ */
+/* ══════════════════════════════════════════════════════
+   LIFESTYLE STRIP
+══════════════════════════════════════════════════════ */
 function LifestyleStrip() {
   const t=useTranslations('lifestyle');
   return (
-    <div style={{position:'relative',height:400,overflow:'hidden'}}>
+    <div style={{position:'relative',height:420,overflow:'hidden'}}>
       <Image src="/img-pergola.jpg" alt="Life at Rayan West" fill
         style={{objectFit:'cover',objectPosition:'center'}}/>
       <div style={{position:'absolute',inset:0,
-        background:'linear-gradient(135deg,rgba(6,13,6,.94) 0%,rgba(15,40,15,.65) 55%,transparent 100%)'}}/>
+        background:'linear-gradient(135deg,rgba(4,11,4,.94) 0%,rgba(15,40,15,.65) 55%,transparent 100%)'}}/>
       <motion.div animate={{opacity:[.3,.6,.3],scale:[1,1.1,1]}}
         transition={{duration:6,repeat:Infinity,ease:'easeInOut'}}
-        style={{position:'absolute',bottom:'-30%',left:'15%',width:500,height:500,
+        style={{position:'absolute',bottom:'-30%',left:'20%',width:500,height:500,
           borderRadius:'50%',pointerEvents:'none',
-          background:`radial-gradient(circle,rgba(74,180,63,.12) 0%,transparent 60%)`}}/>
+          background:'radial-gradient(circle,rgba(106,181,74,.13) 0%,transparent 60%)'}}/>
       <div style={{position:'absolute',inset:0,display:'flex',alignItems:'center'}}>
         <div className="si" style={{width:'100%'}}>
           <motion.div initial={{opacity:0,x:-50}} whileInView={{opacity:1,x:0}}
             viewport={{once:true}} transition={{duration:.9}}>
-            <Tag text={t('tag')}/>
-            <div className="font-display" style={{fontSize:'clamp(28px,5vw,64px)',
-              fontWeight:300,color:'#fff',lineHeight:1.05,marginBottom:4}}>
-              {t('line1')} <strong className="shimmer" style={{fontWeight:700}}>{t('line1b')}</strong>
+            <Tag t={t('tag')}/>
+            <div className="fd" style={{fontSize:'clamp(30px,5vw,64px)',fontWeight:300,
+              color:'#fff',lineHeight:1.05,marginBottom:4}}>
+              {t('line1')} <strong className="sh" style={{fontWeight:700}}>{t('line1b')}</strong>
             </div>
-            <div className="font-display" style={{fontSize:'clamp(28px,5vw,64px)',
-              fontWeight:700,color:'#fff',lineHeight:1.05,marginBottom:20}}>
-              {t('line2')} <strong className="shimmer">{t('line2b')}</strong>
+            <div className="fd" style={{fontSize:'clamp(30px,5vw,64px)',fontWeight:700,
+              color:'#fff',lineHeight:1.05,marginBottom:20}}>
+              {t('line2')} <strong className="sh">{t('line2b')}</strong>
             </div>
             <p style={{fontSize:15,color:G.sub,marginBottom:24}}>{t('arabic')}</p>
             <motion.a whileHover={{scale:1.05}} href="#projects"
               style={{display:'inline-block',
                 background:`linear-gradient(135deg,${G.green},${G.mid})`,
                 color:'#fff',padding:'12px 30px',borderRadius:100,textDecoration:'none',
-                fontSize:13,fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase'}}>
+                fontSize:13,fontWeight:700,letterSpacing:'1.5px',textTransform:'uppercase',
+                boxShadow:`0 8px 24px ${G.glow}`}}>
               {t('btn')}
             </motion.a>
           </motion.div>
@@ -875,165 +831,168 @@ function LifestyleStrip() {
   );
 }
 
-/* ═══════════════════════════════ EGYPT ════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   EGYPT  — 2-col cards
+══════════════════════════════════════════════════════ */
 function Egypt() {
   const t=useTranslations('egypt');
   const stats=t.raw('stats') as Array<{num:string;label:string}>;
   return (
-    <section id="egypt" className="sp" style={{background:'#070f07'}}>
+    <section id="egypt" className="sp" style={{background:'#050c05'}}>
       <div className="si">
-        <div style={{textAlign:'center',marginBottom:48}}>
-          <Reveal><Tag text={t('tag')}/><SectionTitle title={t('title')} bold={t('bold')} center/>
-            <p style={{fontSize:15,color:G.sub,marginTop:16}}>{t('intro')}</p>
-          </Reveal>
-        </div>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24}}>
-          <Reveal delay={.1}>
-            <Card style={{padding:'28px 26px',height:'100%'}}>
-              <h3 className="font-display" style={{fontSize:'clamp(17px,2vw,22px)',fontWeight:600,
-                color:G.light,marginBottom:18,paddingBottom:12,borderBottom:`1px solid ${G.border}`}}>
-                {t('c1title')}</h3>
-              <div style={{display:'flex',flexDirection:'column',gap:12,
-                fontSize:14,color:G.text,lineHeight:1.88}}>
-                <p>{t('p1')}</p><p>{t('p2')}</p><p>{t('p3')}</p>
+        <Reveal d={0} c={<div style={{marginBottom:44}}>
+          <Tag t={t('tag')}/>
+          <ST title={t('title')} bold={t('bold')}/>
+          <p style={{fontSize:15,color:G.text,marginTop:20}}>{t('intro')}</p>
+        </div>}/>
+        <div className="row2">
+          {[
+            {title:t('c1title'),paras:[t('p1'),t('p2'),t('p3')]},
+            {title:t('c2title'),paras:[t('p4'),t('p5')]},
+          ].map((col,i)=>(
+            <Reveal key={i} d={i*.15} c={
+              <div className="card" style={{padding:'32px 28px',height:'100%'}}>
+                <h3 className="fd" style={{fontSize:'clamp(17px,2.5vw,22px)',fontWeight:600,
+                  color:G.light,marginBottom:18,paddingBottom:12,
+                  borderBottom:`1px solid ${G.border}`}}>{col.title}</h3>
+                <div style={{display:'flex',flexDirection:'column',gap:12,
+                  fontSize:14,color:G.text,lineHeight:1.88}}>
+                  {col.paras.map((p,j)=><p key={j}>{p}</p>)}
+                </div>
+                {i===1&&(
+                  <div style={{display:'flex',gap:14,flexWrap:'wrap',marginTop:28}}>
+                    {stats.map((s,j)=>(
+                      <motion.div key={j} whileHover={{scale:1.06}} className="card gp"
+                        style={{textAlign:'center',padding:'18px 24px',cursor:'default'}}>
+                        <div className="fd" style={{fontSize:28,fontWeight:800,color:G.light}}>{s.num}</div>
+                        <div style={{fontSize:11,color:G.sub,marginTop:4}}>{s.label}</div>
+                      </motion.div>
+                    ))}
+                  </div>
+                )}
               </div>
-            </Card>
-          </Reveal>
-          <Reveal delay={.2}>
-            <Card style={{padding:'28px 26px',height:'100%'}}>
-              <h3 className="font-display" style={{fontSize:'clamp(17px,2vw,22px)',fontWeight:600,
-                color:G.light,marginBottom:18,paddingBottom:12,borderBottom:`1px solid ${G.border}`}}>
-                {t('c2title')}</h3>
-              <div style={{display:'flex',flexDirection:'column',gap:12,
-                fontSize:14,color:G.text,lineHeight:1.88,marginBottom:22}}>
-                <p>{t('p4')}</p><p>{t('p5')}</p>
-              </div>
-              <div style={{display:'flex',gap:12,flexWrap:'wrap'}}>
-                {stats.map((s,i)=>(
-                  <motion.div key={i} whileHover={{scale:1.05,borderColor:G.borderH}}
-                    style={{textAlign:'center',padding:'16px 22px',borderRadius:12,
-                      background:'rgba(106,181,74,0.08)',border:`1px solid ${G.border}`,
-                      cursor:'default',transition:'all .25s'}}>
-                    <div className="sn" style={{fontSize:28,fontWeight:800}}>{s.num}</div>
-                    <div style={{fontSize:11,color:G.sub,marginTop:4}}>{s.label}</div>
-                  </motion.div>
-                ))}
-              </div>
-            </Card>
-          </Reveal>
+            }/>
+          ))}
         </div>
       </div>
-      <style>{`@media(max-width:680px){#egypt .si > div:last-child{grid-template-columns:1fr!important}}`}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════ SUSTAINABILITY ═══════════════════════ */
+/* ══════════════════════════════════════════════════════
+   SUSTAINABILITY  — 2-col: text | 2×2 cards
+══════════════════════════════════════════════════════ */
 function Sustainability() {
   const t=useTranslations('sustainability');
   const feats=t.raw('features') as Array<{icon:string;title:string;text:string}>;
   return (
-    <section id="sustainability" className="sp" style={{background:G.bg}}>
-      <div className="si">
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:40,alignItems:'start'}}>
+    <section id="sustainability" className="sp" style={{background:'#071207',position:'relative',overflow:'hidden'}}>
+      <div style={{position:'absolute',inset:0,
+        background:'radial-gradient(ellipse at 50% 100%,rgba(106,181,74,.08) 0%,transparent 60%)',
+        pointerEvents:'none'}}/>
+      <div className="si" style={{position:'relative',zIndex:2}}>
+        <div className="row2L">
           <div>
-            <Reveal><Tag text={t('tag')}/><SectionTitle title={t('title')} bold={t('bold')}/>
-              <p style={{fontSize:15,color:G.text,marginTop:20,lineHeight:1.88}}>{t('p1')}</p>
-              <p style={{fontSize:15,color:G.text,marginTop:12,lineHeight:1.88}}>{t('p2')}</p>
+            <Reveal c={<><Tag t={t('tag')}/><ST title={t('title')} bold={t('bold')}/></>}/>
+            <Reveal d={.1} s={{marginTop:22,display:'flex',flexDirection:'column',gap:14,
+              fontSize:15,color:G.text,lineHeight:1.88}}>
+              <p>{t('p1')}</p><p>{t('p2')}</p>
             </Reveal>
           </div>
-          <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{once:true}}
-            style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:14}}>
+          <motion.div variants={sg} initial="hidden" whileInView="visible" viewport={{once:true}}
+            className="row2" style={{gap:14,alignItems:'start'}}>
             {feats.map((f,i)=>(
-              <motion.div key={i} variants={fadeUp}>
-                <Card style={{padding:'24px 20px',height:'100%'}}>
-                  <div style={{fontSize:26,marginBottom:10}}>{f.icon}</div>
-                  <div style={{fontSize:13,fontWeight:700,color:G.light,marginBottom:6}}>{f.title}</div>
-                  <div style={{fontSize:12,color:G.text,lineHeight:1.65}}>{f.text}</div>
-                </Card>
+              <motion.div key={i} variants={up}
+                whileHover={{scale:1.04,borderColor:G.borderH,background:'rgba(106,181,74,.1)'}}
+                className="card"
+                style={{padding:'24px 20px',cursor:'default',transition:'all .3s'}}>
+                <div style={{fontSize:26,marginBottom:10}}>{f.icon}</div>
+                <div style={{fontSize:13,fontWeight:700,color:G.light,marginBottom:6}}>{f.title}</div>
+                <div style={{fontSize:13,color:G.text,lineHeight:1.65}}>{f.text}</div>
               </motion.div>
             ))}
           </motion.div>
         </div>
       </div>
-      <style>{`@media(max-width:740px){#sustainability .si > div{grid-template-columns:1fr!important}}`}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════ PARTNERS ════════════════════════════= */
+/* ══════════════════════════════════════════════════════
+   PARTNERS  — 2 cards in same row
+══════════════════════════════════════════════════════ */
 function Partners() {
   const t=useTranslations('partners');
-  const sg=useTranslations('partners.sg');
+  const sg2=useTranslations('partners.sg');
   const ef=useTranslations('partners.ef');
   const partners=[
-    {name:sg('name'),emoji:'☀️',secs:sg.raw('sections') as Array<{title:string;text:string}>},
-    {name:ef('name'),emoji:'🏗️',secs:ef.raw('sections') as Array<{title:string;text:string}>},
+    {name:sg2('name'),emoji:'☀️',secs:sg2.raw('sections') as Array<{title:string;text:string}>},
+    {name:ef('name'), emoji:'🏗️',secs:ef.raw('sections')  as Array<{title:string;text:string}>},
   ];
   return (
-    <section id="partners" className="sp" style={{background:'#070f07'}}>
+    <section id="partners" className="sp" style={{background:'#060d06'}}>
       <div className="si">
-        <div style={{textAlign:'center',marginBottom:48}}>
-          <Reveal><Tag text={t('tag')}/><SectionTitle title={t('title')} bold={t('bold')} center/></Reveal>
-          <Reveal delay={.1}><p style={{fontSize:15,color:G.sub,maxWidth:520,margin:'14px auto 0'}}>{t('desc')}</p></Reveal>
-        </div>
-        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24}}>
+        <Reveal d={0} c={<div style={{textAlign:'center',marginBottom:48}}>
+          <Tag t={t('tag')}/>
+          <ST title={t('title')} bold={t('bold')}/>
+          <p style={{fontSize:15,color:G.text,maxWidth:560,margin:'20px auto 0'}}>{t('desc')}</p>
+        </div>}/>
+        <div className="row2">
           {partners.map((p,i)=>(
-            <Reveal key={i} delay={i*.15}>
-              <Card style={{overflow:'hidden',height:'100%'}}>
-                <div style={{padding:'26px 28px',
+            <Reveal key={i} d={i*.15} c={
+              <motion.div whileHover={{y:-8}} className="card" style={{overflow:'hidden'}}>
+                <div style={{padding:'28px 32px',
                   background:'linear-gradient(135deg,#061506,#0d2a0d)'}}>
-                  <div style={{fontSize:20,fontWeight:800,color:'#fff',letterSpacing:.5}}>
+                  <div style={{fontSize:20,fontWeight:800,color:'#fff',letterSpacing:1}}>
                     {p.emoji} {p.name}
                   </div>
                 </div>
-                <div style={{padding:'22px 28px 28px',display:'flex',flexDirection:'column',gap:20}}>
+                <div style={{padding:'24px 32px 32px',display:'flex',flexDirection:'column',gap:20}}>
                   {p.secs.map((s,j)=>(
                     <div key={j}>
-                      <h4 className="font-display" style={{fontSize:16,fontWeight:600,color:G.light,
-                        marginBottom:7,paddingBottom:7,borderBottom:`1px solid ${G.border}`}}>{s.title}</h4>
+                      <h4 className="fd" style={{fontSize:17,fontWeight:600,color:G.light,
+                        marginBottom:8,paddingBottom:8,borderBottom:`1px solid ${G.border}`}}>{s.title}</h4>
                       <p style={{fontSize:13,color:G.text,lineHeight:1.78}}>{s.text}</p>
                     </div>
                   ))}
                 </div>
-              </Card>
-            </Reveal>
+              </motion.div>
+            }/>
           ))}
         </div>
       </div>
-      <style>{`@media(max-width:680px){#partners .si > div:last-child{grid-template-columns:1fr!important}}`}</style>
     </section>
   );
 }
 
-/* ═══════════════════════════════ FOOTER ═══════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════════════════ */
 function Footer() {
   const t=useTranslations('footer');
   const cols=t.raw('cols') as Array<{title:string;links:Array<{label:string;href:string}>}>;
   return (
-    <footer style={{background:'#030803',padding:'56px 0 28px',
+    <footer style={{background:'#030803',padding:'60px 0 28px',
       borderTop:`1px solid ${G.border}`}}>
       <div className="si">
-        <div style={{display:'grid',gridTemplateColumns:'1.4fr 1fr 1fr 1fr',gap:40,
-          paddingBottom:40,borderBottom:`1px solid rgba(106,181,74,0.1)`,marginBottom:28}}>
+        <div className="rowF" style={{paddingBottom:44,borderBottom:`1px solid ${G.border}`,marginBottom:28}}>
           <div>
-            <div className="font-display" style={{fontSize:28,fontWeight:600,color:'#fff',marginBottom:4}}>
-              LA <span className="shimmer">GRANJA</span>
+            <div className="fd" style={{fontSize:30,fontWeight:600,color:'#fff',marginBottom:5}}>
+              LA <span className="sh">GRANJA</span>
             </div>
-            <div style={{fontSize:12,fontStyle:'italic',color:G.muted,marginBottom:12}}>{t('tagline')}</div>
-            <p style={{fontSize:12,color:'rgba(170,210,120,0.35)',lineHeight:1.75,maxWidth:240}}>{t('about')}</p>
+            <div style={{fontSize:13,fontStyle:'italic',color:G.muted,marginBottom:12}}>{t('tagline')}</div>
+            <p style={{fontSize:12,color:G.muted,lineHeight:1.78,maxWidth:240}}>{t('about')}</p>
           </div>
           {cols.map((col,i)=>(
             <div key={i}>
               <div style={{fontSize:10,letterSpacing:'2px',textTransform:'uppercase',
                 fontWeight:700,color:G.mid,marginBottom:16}}>{col.title}</div>
-              <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:9}}>
+              <ul style={{listStyle:'none',display:'flex',flexDirection:'column',gap:10}}>
                 {col.links.map((l,j)=>(
                   <li key={j}>
-                    <a href={l.href} style={{fontSize:12,color:'rgba(170,210,120,0.4)',
-                      textDecoration:'none',transition:'color .25s'}}
+                    <a href={l.href} style={{fontSize:12,color:G.muted,textDecoration:'none',transition:'color .3s'}}
                       onMouseOver={e=>(e.currentTarget.style.color=G.light)}
-                      onMouseOut={e=>(e.currentTarget.style.color='rgba(170,210,120,0.4)')}>
+                      onMouseOut={e=>(e.currentTarget.style.color=G.muted)}>
                       {l.label}
                     </a>
                   </li>
@@ -1042,20 +1001,19 @@ function Footer() {
             </div>
           ))}
         </div>
-        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',
-          flexWrap:'wrap',gap:10}}>
-          <span style={{fontSize:11,color:'rgba(170,210,120,0.3)'}}>{t('copy')}</span>
+        <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',flexWrap:'wrap',gap:10}}>
+          <span style={{fontSize:11,color:G.muted}}>{t('copy')}</span>
           <a href="https://lagranjaeg.com" target="_blank"
             style={{fontSize:11,color:G.mid,textDecoration:'none'}}>lagranjaeg.com</a>
         </div>
       </div>
-      <style>{`@media(max-width:860px){footer .si > div:first-child{grid-template-columns:1fr 1fr!important;gap:28px!important}}
-              @media(max-width:500px){footer .si > div:first-child{grid-template-columns:1fr!important}}`}</style>
     </footer>
   );
 }
 
-/* ═══════════════════════════════ PAGE ═════════════════════════════════ */
+/* ══════════════════════════════════════════════════════
+   PAGE
+══════════════════════════════════════════════════════ */
 export default function HomePage() {
   return (
     <>
